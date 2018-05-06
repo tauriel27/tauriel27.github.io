@@ -488,6 +488,231 @@ hexo n == hexo new
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/05/06/first-blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tauriel">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tauriel' Story">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/06/first-blog/" itemprop="url">
+                  Github Pages+Hexo搭建个人博客
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-05-06 00:00:00 / Modified: 15:19:11" itemprop="dateCreated datePublished" datetime="2018-05-06T00:00:00+08:00">2018-05-06</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><em>Github Pages 是面向用户、组织和项目开放的公共静态页面搭建托管服 务，站点可以被免费托管在 Github 上，你可以选择使用 Github Pages 默 认提供的域名 github.io 或者自定义域名来发布站点。</em></p>
+<p><em>Hexo是一款基于Node.js的静态博客框架，依赖少易于安装使用，可以方便的生成静态网页托管在GitHub和Heroku上，是搭建博客的首选框架。</em></p>
+<font color="#0099ff" face="黑体" size="6">let’s do it !!!</font>
+
+<h2 id="环境（macOS）"><a href="#环境（macOS）" class="headerlink" title="环境（macOS）"></a>环境（macOS）</h2><ul>
+<li>Github 账号</li>
+<li>Git</li>
+<li>Node.js</li>
+<li>npm</li>
+<li>Hexo</li>
+</ul>
+<h2 id="Github"><a href="#Github" class="headerlink" title="Github"></a>Github</h2><blockquote>
+<p>注册Github &amp;&amp; 安装git</p>
+</blockquote>
+<pre><code>$ brew install git
+</code></pre><blockquote>
+<p>Create a new repository</p>
+</blockquote>
+<p><code>username</code> 和用户名相同</p>
+<p><img src="/image/15255828147688.jpg" alt=""></p>
+<h2 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h2><blockquote>
+<ol>
+<li>下载 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a> 直接安装</li>
+<li>使用 nvm（Node.js版本管理器）安装</li>
+</ol>
+</blockquote>
+<pre><code># install nvm
+$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+
+# set environment 
+$ export NVM_DIR=&quot;$HOME/.nvm&quot;
+[ -s &quot;$NVM_DIR/nvm.sh&quot; ] &amp;&amp; \. &quot;$NVM_DIR/nvm.sh&quot; # This loads nvm
+
+# install Node.js v8.11.1 LTS
+$ nvm install 8.11.1
+
+# check Node.js &amp; npm version
+$ node -v
+$ npm -v
+</code></pre><h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><pre><code># install nvm
+$ sudo npm install -g hexo
+
+# check version
+$ hexo -v
+</code></pre><h2 id="Hexo博客"><a href="#Hexo博客" class="headerlink" title="Hexo博客"></a>Hexo博客</h2><pre><code># initialization，username 改成自己的
+$ hexo init tauriel27.github.io
+
+# configure your blog
+$ cd ~/tauriel27.github.io
+
+# get &apos;next&apos; theme
+$ git clone https://github.com/theme-next/hexo-theme-next themes/next
+
+# modify _config.yml file 
+$ vim ~/tauriel27.github.io/_config.yml
+</code></pre><p><img src="/image/15255865180684.jpg" alt=""></p>
+<pre><code># install dependency 
+$ npm install
+
+# genarate 
+hexo g
+
+# run server
+hexo s
+</code></pre><p><code>cmd</code> 点击 <code>http://localhost:4000/</code> 在浏览器打开，这就是在本机上生成的静态页面，<code>Ctrl+c</code> 终止程序</p>
+<p>##部署到Github</p>
+<pre><code># install deployer
+$ npm install hexo-deployer-git –save
+
+# modify _config.yml
+</code></pre><p><img src="/image/15255864566835.jpg" alt=""></p>
+<pre><code># deploy
+$ hexo d
+</code></pre><p>浏览器打开 <code>tauriel27.github.io</code> 就可以看到自己的博客了</p>
+<p>===========================<br><em>发布新博客的时候记得先clean一下</em></p>
+<pre><code>$ hexo clean 
+$ hexo generate
+$ hexo depoly
+</code></pre><p><em>快捷键</em></p>
+<pre><code>hexo g == hexo generate
+hexo d == hexo deploy
+hexo s == hexo server
+hexo n == hexo new
+</code></pre><p><em>获取更多</em> <a href="https://hexo.io/themes/" target="_blank" rel="noopener">Hexo 主题</a><br><em>获取更多</em> <a href="https://hexo.io/plugins/" target="_blank" rel="noopener">Hexo 插件</a></p>
+<hr>
+<p><strong>Reference:</strong><br><em><a href="http://lijiankun24.com/Mac下Hexo和GitHub-Pages搭建个人博客2/" target="_blank" rel="noopener">http://lijiankun24.com/Mac下Hexo和GitHub-Pages搭建个人博客2/</a></em></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/05/04/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -660,7 +885,7 @@ hexo n == hexo new
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
