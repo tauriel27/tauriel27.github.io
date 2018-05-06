@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://tauriel27.github.io/tags/index.html</loc>
+    
+    <lastmod>2018-05-06T07:40:25.922Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://tauriel27.github.io/2018/05/06/Github-Pages-Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</loc>
     
-    <lastmod>2018-05-06T07:25:24.814Z</lastmod>
+    <lastmod>2018-05-06T07:39:46.001Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://tauriel27.github.io/categories/index.html</loc>
+    
+    <lastmod>2018-05-06T07:37:12.894Z</lastmod>
     
   </url>
   
