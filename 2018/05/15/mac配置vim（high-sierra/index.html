@@ -148,25 +148,28 @@
 
 
 
-  <meta name="description" content="Gnome   123sudo apt install gnome-tweak-toolsudo apt install gnome-shell-extensionssudo apt install chrome-gnome-shell  查看运行GPU上的程序 1fuser -v /dev/nvidia*  Unsupported locale setting 1234/etc/default">
-<meta name="keywords" content="macOs,linux">
+  <meta name="description" content="先说一下为什么要搞一搞这个vim吧。mac自带vim，本来一直都比较喜欢原生态的东西，但是有些东西就是做的垃圾。。还不改 之前开启了鼠标操作，复制操作都是使用鼠标选中，然后直接cmd + c就行，但是偶然想尝试一下快捷键，发现vim无法跨文件复制，提示E353: Nothing in register &amp;quot; GOOGLE一波，结论如下 mac自带的vim不支持+寄存器   关于vim寄存器">
+<meta name="keywords" content="macOS High sierra,vim,macvim">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tips">
-<meta property="og:url" content="http://tauriel27.github.io/2018/05/14/tips/index.html">
+<meta property="og:title" content="mac配置vim（high sierra)">
+<meta property="og:url" content="http://tauriel27.github.io/2018/05/15/mac配置vim（high-sierra/index.html">
 <meta property="og:site_name" content="Tauriel&#39; Story">
-<meta property="og:description" content="Gnome   123sudo apt install gnome-tweak-toolsudo apt install gnome-shell-extensionssudo apt install chrome-gnome-shell  查看运行GPU上的程序 1fuser -v /dev/nvidia*  Unsupported locale setting 1234/etc/default">
+<meta property="og:description" content="先说一下为什么要搞一搞这个vim吧。mac自带vim，本来一直都比较喜欢原生态的东西，但是有些东西就是做的垃圾。。还不改 之前开启了鼠标操作，复制操作都是使用鼠标选中，然后直接cmd + c就行，但是偶然想尝试一下快捷键，发现vim无法跨文件复制，提示E353: Nothing in register &amp;quot; GOOGLE一波，结论如下 mac自带的vim不支持+寄存器   关于vim寄存器">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-14T11:37:22.288Z">
+<meta property="og:image" content="http://tauriel27.github.io/2018/05/15/image/2018-05-15-19-53-06.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/05/15/image/2018-05-15-20-07-29.png">
+<meta property="og:updated_time" content="2018-05-15T12:40:33.718Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tips">
-<meta name="twitter:description" content="Gnome   123sudo apt install gnome-tweak-toolsudo apt install gnome-shell-extensionssudo apt install chrome-gnome-shell  查看运行GPU上的程序 1fuser -v /dev/nvidia*  Unsupported locale setting 1234/etc/default">
+<meta name="twitter:title" content="mac配置vim（high sierra)">
+<meta name="twitter:description" content="先说一下为什么要搞一搞这个vim吧。mac自带vim，本来一直都比较喜欢原生态的东西，但是有些东西就是做的垃圾。。还不改 之前开启了鼠标操作，复制操作都是使用鼠标选中，然后直接cmd + c就行，但是偶然想尝试一下快捷键，发现vim无法跨文件复制，提示E353: Nothing in register &amp;quot; GOOGLE一波，结论如下 mac自带的vim不支持+寄存器   关于vim寄存器">
+<meta name="twitter:image" content="http://tauriel27.github.io/2018/05/15/image/2018-05-15-19-53-06.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://tauriel27.github.io/2018/05/14/tips/"/>
+  <link rel="canonical" href="http://tauriel27.github.io/2018/05/15/mac配置vim（high-sierra/"/>
 
 
 
@@ -176,7 +179,7 @@
   };
 </script>
 
-  <title>tips | Tauriel' Story</title>
+  <title>mac配置vim（high sierra) | Tauriel' Story</title>
   
 
 
@@ -340,7 +343,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/05/14/tips/">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/05/15/mac配置vim（high-sierra/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tauriel">
@@ -357,7 +360,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">tips
+          <h1 class="post-title" itemprop="name headline">mac配置vim（high sierra)
               
             
           </h1>
@@ -382,7 +385,7 @@
                 
               
 
-              <time title="Created: 2018-05-14 00:00:00 / Modified: 19:37:22" itemprop="dateCreated datePublished" datetime="2018-05-14T00:00:00+08:00">2018-05-14</time>
+              <time title="Created: 2018-05-15 19:10:12 / Modified: 20:40:33" itemprop="dateCreated datePublished" datetime="2018-05-15T19:10:12+08:00">2018-05-15</time>
             
 
             
@@ -404,7 +407,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Mac正确使用姿势/" itemprop="url" rel="index"><span itemprop="name">Mac正确使用姿势</span></a></span>
 
                 
                 
@@ -438,56 +441,38 @@
       
 
       
-        <ol>
-<li><p>Gnome  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gnome-tweak-tool</span><br><span class="line">sudo apt install gnome-shell-extensions</span><br><span class="line">sudo apt install chrome-gnome-shell</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看运行GPU上的程序</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fuser -v /dev/nvidia*</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Unsupported locale setting</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/default/<span class="built_in">local</span></span><br><span class="line"><span class="built_in">export</span> LANGUAGE=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> LC_ALL=en_US.UTF-8</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Sorry, ubuntu has experienced an internal error</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/default/apport</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>更换GUN版本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc-5 g++-5 </span><br><span class="line">sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 110 --slave /usr/bin/g++ g++ /usr/bin/g++-5 --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-5</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Tmux开启鼠标支持</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux <span class="built_in">set</span> -g mouse on</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>gist.github.com无法打开</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/hosts</span><br><span class="line">192.30.253.118 gist.github.com</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>mac查看CPU</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl machdep.cpu</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Mount error: “unknown filesystem type ‘exfat’”</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install exfat-fuse exfat-utils</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>无法打开维基百科</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># add to hosts </span></span><br><span class="line">198.35.26.96 zh.wikipedia.org</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>jupyter安装插件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip install jupyter_contrib_nbextensions</span><br><span class="line">jupyter contrib nbextension install --user</span><br><span class="line">pip install jupyter_nbextensions_configurator</span><br><span class="line">jupyter nbextensions_configurator <span class="built_in">enable</span> --user</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>jupyter 默认</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">%config InlineBackend.figure_format=<span class="string">'retina'</span></span><br><span class="line">plt.style.use(<span class="string">'ggplot'</span>)</span><br><span class="line">plt.rcParams[<span class="string">'figure.figsize'</span>] = (<span class="number">5.0</span>, <span class="number">4.0</span>) </span><br><span class="line">plt.rcParams[<span class="string">'image.interpolation'</span>] = <span class="string">'nearest'</span></span><br><span class="line">plt.rcParams[<span class="string">'image.cmap'</span>] = <span class="string">'gray'</span></span><br><span class="line"></span><br><span class="line">%load_ext autoreload</span><br><span class="line">%autoreload <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改jupyter主题</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pip install jupyterthemes</span><br><span class="line"><span class="comment"># list </span></span><br><span class="line">jt -l</span><br><span class="line"><span class="comment"># set</span></span><br><span class="line">jt -t -N -T -cellw 100%</span><br><span class="line"><span class="comment"># reset</span></span><br><span class="line">jt -r</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改jupyter默认主题宽度100</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.jupyter/custom/custom.css</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Make the notebook cells take almost all available width */</span></span><br><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">99%</span> <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* Prevent the edit cell highlight box from getting clipped; * important so that it also works when cell is in edit mode*/</span></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-class">.cell</span><span class="selector-class">.selected</span> &#123;</span><br><span class="line">    <span class="attribute">border-left-width</span>: <span class="number">1px</span> <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>RGBA sequence should have length 3 or 4</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Return a contiguous flattened array.</span></span><br><span class="line">np.ravel(Y)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>jupyter 安装py2 kernel</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python2 -m pip install IPython==5.0 --user</span><br><span class="line">python2 -m pip install ipykernel --user</span><br><span class="line">python2 -m ipykernel install --user</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+        <p><em>先说一下为什么要搞一搞这个vim吧。mac自带vim，本来一直都比较喜欢原生态的东西，但是有些东西就是做的垃圾。。还不改</em></p>
+<p><em>之前开启了鼠标操作，复制操作都是使用鼠标选中，然后直接<code>cmd + c</code>就行，但是偶然想尝试一下快捷键，发现vim无法跨文件复制，提示<code>E353: Nothing in register &quot;</code></em></p>
+<h1 id="GOOGLE一波，结论如下"><a href="#GOOGLE一波，结论如下" class="headerlink" title="GOOGLE一波，结论如下"></a>GOOGLE一波，结论如下</h1><ul>
+<li><strong>mac自带的vim不支持+寄存器</strong></li>
+</ul>
+<blockquote>
+<p>关于vim寄存器，感兴趣<a href="https://harttle.land/2016/07/25/vim-registers.html" target="_blank" rel="noopener">戳这里</a>了解更多</p>
+</blockquote>
+<p>可以通过下面命令查看是否支持<code>+clipboard</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim --version | grep clipboard</span><br></pre></td></tr></table></figure></p>
+<p>如果没有<code>+clipboard</code>这一项，那就是不支持，其他Linux操作系统也可以这么查看</p>
+<p>并没有搜索到如何通过修改自带的vim来解决这个问题，也没有必要太过折腾，解决方法如下</p>
+<ul>
+<li><strong><code>brew install vim 或者 macvim</code>来替换系统默认的vim</strong></li>
+</ul>
+<h1 id="配置macvim"><a href="#配置macvim" class="headerlink" title="配置macvim"></a>配置macvim</h1><h2 id="安装macvim"><a href="#安装macvim" class="headerlink" title="安装macvim"></a>安装macvim</h2><p><em><code>--with-override-system-vim</code>是brew最新的写法，网上搜到的–override**写法已经被弃用, <code>brew linkapps</code>也被弃用</em><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install macvim --with-override-system-vim</span><br></pre></td></tr></table></figure></p>
+<p>这时候macvim安装在<code>/usr/local/Cellar/macvim</code>下，使用<code>mvim</code>即可调用</p>
+<h2 id="设置alias"><a href="#设置alias" class="headerlink" title="设置alias"></a>设置alias</h2><p>通过<code>alias</code>命令，继续使用vim命令，但是调用的是macvi`m<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装了zsh，环境变量设置在~/.zshrc中</span></span><br><span class="line"><span class="comment"># 使用bash的话，修改~/.bashrc</span></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># 行末添加</span></span><br><span class="line"><span class="built_in">alias</span> vim=<span class="string">'mvim -v'</span></span><br></pre></td></tr></table></figure></p>
+<p>这时候再查看，系统已经支持+clipboard<br><img src="../image/2018-05-15-19-53-06.png" alt=""><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改vim配置文件~/.vimrc</span></span><br><span class="line">vim ~/.vimrc</span><br><span class="line"><span class="comment"># 添加下行，使用系统剪切板</span></span><br><span class="line"><span class="built_in">set</span> clipboard=unname</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>还有一个问题，就是在<code>tmux</code>下使用<code>vim</code>依旧无法使用系统寄存器，无法跨文件拷贝，报错和上面相同。我使用<code>ubuntu</code>也遇到这个问题，还未解决。<code>macOS</code>解决方法如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install reattach-to-user-namespace</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>如果不喜欢折腾，到这里已经可以了，下面是使用插件让vim更加精致</p>
+<hr>
+<blockquote>
+<p>首先<a href="https://github.com/sailor103/vim-mac" target="_blank" rel="noopener">戳这里</a>下载.vimrc文件，放在<code>~</code>目录下</p>
+</blockquote>
+<h2 id="安装Vundle"><a href="#安装Vundle" class="headerlink" title="安装Vundle"></a>安装Vundle</h2><p><code>Vundle</code>是管理vim插件的软件</p>
+<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Vundle放到~/.vim/bundle文件夹</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim</span><br></pre></td></tr></table></figure>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开vim</span></span><br><span class="line">$  vim</span><br><span class="line"><span class="comment"># 进入vim命令行模式，`esc`</span></span><br><span class="line">:PluginInstall</span><br></pre></td></tr></table></figure>
+<p><em>这时候会开始安装一系列插件，过程<strong>巨慢</strong>， 之前也搜到有其他的管理vim插件的软件，效率比Vundle要高，有兴趣可以尝试</em></p>
+<p><em>安装完可能会有部分插件安装失败</em><br><img src="../image/2018-05-15-20-07-29.png" alt=""></p>
+<p>*这时候可以输入<code>L</code>查看日志情况，根据错误信息去解决，把最新的插件放到<code>~/.vim/bundle</code>文件夹</p>
 
       
     </div>
@@ -508,9 +493,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/macOs/" rel="tag"># macOs</a>
+            <a href="/tags/macOS-High-sierra/" rel="tag"># macOS High sierra</a>
           
-            <a href="/tags/linux/" rel="tag"># linux</a>
+            <a href="/tags/vim/" rel="tag"># vim</a>
+          
+            <a href="/tags/macvim/" rel="tag"># macvim</a>
           
         </div>
       
@@ -532,10 +519,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/14/g/" rel="prev" title="g">
-                g <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -584,8 +567,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -600,7 +592,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -638,7 +630,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -664,6 +660,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GOOGLE一波，结论如下"><span class="nav-number">1.</span> <span class="nav-text">GOOGLE一波，结论如下</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置macvim"><span class="nav-number">2.</span> <span class="nav-text">配置macvim</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装macvim"><span class="nav-number">2.1.</span> <span class="nav-text">安装macvim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置alias"><span class="nav-number">2.2.</span> <span class="nav-text">设置alias</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Vundle"><span class="nav-number">2.3.</span> <span class="nav-text">安装Vundle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载"><span class="nav-number">2.3.1.</span> <span class="nav-text">下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.3.2.</span> <span class="nav-text">安装</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

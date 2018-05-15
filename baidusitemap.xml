@@ -4,21 +4,23 @@
 
     
   <url>
-    <loc>http://tauriel27.github.io/2018/05/14/tips/</loc>
-    <lastmod>2018-05-14T11:37:22.288Z</lastmod>
+    <loc>http://tauriel27.github.io/2018/05/15/mac%E9%85%8D%E7%BD%AEvim%EF%BC%88high-sierra/</loc>
+    <lastmod>2018-05-15T12:40:33.718Z</lastmod>
     <data>
         <display>
-        <title>tips</title>
-        <pubTime>2018-05-13T16:00:00.000Z</pubTime>
+        <title>mac配置vim（high sierra)</title>
+        <pubTime>2018-05-15T11:10:12.000Z</pubTime>
         
-        <tag>macOs</tag>
+        <tag>macOS High sierra</tag>
          
-        <tag>linux</tag>
+        <tag>vim</tag>
+         
+        <tag>macvim</tag>
          
          
            
              
-              <breadCrumb title="note" url="http://tauriel27.github.io/categories/note/"/>
+              <breadCrumb title="Mac正确使用姿势" url="http://tauriel27.github.io/categories/Mac%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF/"/>
           
         </display>
     </data>
@@ -26,30 +28,14 @@
 
     
   <url>
-    <loc>http://tauriel27.github.io/2018/05/14/g/</loc>
-    <lastmod>2018-05-14T11:36:31.025Z</lastmod>
-    <data>
-        <display>
-        <title>g</title>
-        <pubTime>2018-05-14T11:36:31.000Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-    
-  <url>
     <loc>http://tauriel27.github.io/2018/05/06/Github-Pages-Hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</loc>
-    <lastmod>2018-05-06T07:39:46.001Z</lastmod>
+    <lastmod>2018-05-15T12:40:32.713Z</lastmod>
     <data>
         <display>
         <title>Github Pages+Hexo搭建个人博客</title>
         <pubTime>2018-05-06T06:29:09.000Z</pubTime>
         
-        <tag>macOs</tag>
+        <tag>macOS High Sierra</tag>
          
         <tag>Github Pages</tag>
          
@@ -58,7 +44,7 @@
          
            
              
-              <breadCrumb title="Web" url="http://tauriel27.github.io/categories/Web/"/>
+              <breadCrumb title="Web技术" url="http://tauriel27.github.io/categories/Web%E6%8A%80%E6%9C%AF/"/>
           
         </display>
     </data>
@@ -66,18 +52,4 @@
 
     
     
-  <url>
-    <loc>http://tauriel27.github.io/2018/05/04/hello-world/</loc>
-    <lastmod>2018-05-04T14:26:06.280Z</lastmod>
-    <data>
-        <display>
-        <title>Hello World</title>
-        <pubTime>2018-05-04T14:26:06.280Z</pubTime>
-        
-         
-           
-        </display>
-    </data>
-    </url>
-
 </urlset>
