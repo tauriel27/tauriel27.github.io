@@ -336,204 +336,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/特征工程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tauriel">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tauriel' Story">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/28/特征工程/" itemprop="url">
-                  Untitled
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-28 21:49:16 / Modified: 21:53:59" itemprop="dateCreated datePublished" datetime="2018-09-28T21:49:16+08:00">2018-09-28</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="异常值"><a href="#异常值" class="headerlink" title="异常值"></a>异常值</h1><blockquote>
-<p>基于距离度量的方法，对异常值很敏感</p>
-</blockquote>
-<h2 id="可视化分析"><a href="#可视化分析" class="headerlink" title="可视化分析"></a>可视化分析</h2><ul>
-<li>直方图</li>
-<li>散点图</li>
-<li>箱型图</li>
-<li>Q-Q图</li>
-</ul>
-<h2 id="3-sigma-原则"><a href="#3-sigma-原则" class="headerlink" title="3 $\sigma$原则"></a>3 $\sigma$原则</h2><p>如果数据服从正态分布，距离均值3倍标准差的值认为是异常值</p>
-<h2 id="箱型图分析"><a href="#箱型图分析" class="headerlink" title="箱型图分析"></a>箱型图分析</h2><p>箱型图提供了识别异常值的一个标准：如果一个值小于QL01.5IQR或大于OU-1.5IQR的值，则被称为异常值。QL为下四分位数，表示全部观察值中有四分之一的数据取值比它小；QU为上四分位数，表示全部观察值中有四分之一的数据取值比它大；IQR为四分位数间距，是上四分位数QU与下四分位数QL的差值，包含了全部观察值的一半。箱型图判断异常值的方法以四分位数和四分位距为基础，四分位数具有鲁棒性：25%的数据可以变得任意远并且不会干扰四分位数，所以异常值不能对这个标准施加影响。因此箱型图识别异常值比较客观，在识别异常值时有一定的优越性。</p>
-<h2 id="基于距离"><a href="#基于距离" class="headerlink" title="基于距离"></a>基于距离</h2><p>通常可以在对象之间定义邻近性度量，异常对象是那些远离其他对象的对象<br>优缺点：1.简单；2.缺点：基于邻近度的方法需要O(m2)时间，大数据集不适用；3.该方法对参数的选择也是敏感的；4.不能处理具有不同密度区域的数据集，因为它使用全局阈值，不能考虑这种密度的变化。</p>
-<h2 id="基于模型检测"><a href="#基于模型检测" class="headerlink" title="基于模型检测"></a>基于模型检测</h2><p>首先建立一个数据模型，异常是那些同模型不能完美拟合的对象；如果模型是簇的集合，则异常是不显著属于任何簇的对象；在使用回归模型时，异常是相对远离预测值的对象<br>优缺点：1.有坚实的统计学理论基础，当存在充分的数据和所用的检验类型的知识时，这些检验可能非常有效；2.对于多元数据，可用的选择少一些，并且对于高维数据，这些检测可能性很差。</p>
-<h2 id="基于密度"><a href="#基于密度" class="headerlink" title="基于密度"></a>基于密度</h2><p>当一个点的局部密度显著低于它的大部分近邻时才将其分类为离群点。适合非均匀分布的数据。<br>优缺点：1.给出了对象是离群点的定量度量，并且即使数据具有不同的区域也能够很好的处理；2.与基于距离的方法一样，这些方法必然具有O(m2)的时间复杂度。对于低维数据使用特定的数据结构可以达到O(mlogm)；3.参数选择困难。虽然算法通过观察不同的k值，取得最大离群点得分来处理该问题，但是，仍然需要选择这些值的上下界。</p>
-<h2 id="基于聚类"><a href="#基于聚类" class="headerlink" title="基于聚类"></a>基于聚类</h2><p>基于聚类的离群点：一个对象是基于聚类的离群点，如果该对象不强属于任何簇。离群点对初始聚类的影响：如果通过聚类检测离群点，则由于离群点影响聚类，存在一个问题：结构是否有效。为了处理该问题，可以使用如下方法：对象聚类，删除离群点，对象再次聚类（这个不能保证产生最优结果）。<br>优缺点：1.基于线性和接近线性复杂度（k均值）的聚类技术来发现离群点可能是高度有效的；2.簇的定义通常是离群点的补，因此可能同时发现簇和离群点；3.产生的离群点集和它们的得分可能非常依赖所用的簇的个数和数据中离群点的存在性；4.聚类算法产生的簇的质量对该算法产生的离群点的质量影响非常大。</p>
-<h2 id="如何处理"><a href="#如何处理" class="headerlink" title="如何处理"></a>如何处理</h2><p>根据错误类型，人为错误进行修改，自然错误需特别处理</p>
-<ul>
-<li>删除</li>
-<li>变换</li>
-<li>基于统计量修改</li>
-</ul>
-<h1 id="缺失值"><a href="#缺失值" class="headerlink" title="缺失值"></a>缺失值</h1><h2 id="删除特征"><a href="#删除特征" class="headerlink" title="删除特征"></a>删除特征</h2><p>根据特征重要性，重要性较低的，缺失率较高的删除</p>
-<h2 id="统计量填充"><a href="#统计量填充" class="headerlink" title="统计量填充"></a>统计量填充</h2><p>中位数（非均匀分布），均值（均匀分布）</p>
-<h2 id="插值"><a href="#插值" class="headerlink" title="插值"></a>插值</h2><ul>
-<li>随机插补法</li>
-</ul>
-<p>随机选取样本填充</p>
-<ul>
-<li>多重插补法</li>
-</ul>
-<p>通过变量关系对确实数据预测</p>
-<ul>
-<li>热平台插补</li>
-</ul>
-<p>在非缺失样本中找到与缺失样本相似对样本，填充</p>
-<ul>
-<li>拉格朗日插值、牛顿插值<h2 id="模型预测"><a href="#模型预测" class="headerlink" title="模型预测"></a>模型预测</h2>使用该列特征已有条目训练模型，预测空条目<h2 id="特殊处理"><a href="#特殊处理" class="headerlink" title="特殊处理"></a>特殊处理</h2>对于重要性特别高的特征，另行处理</li>
-</ul>
-<h1 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h1><blockquote>
-<p>code</p>
-</blockquote>
-<h1 id="噪声"><a href="#噪声" class="headerlink" title="噪声"></a>噪声</h1><blockquote>
-<p>噪音，是被测量变量的随机误差或方差。我们在上文中提到过异常点（离群点），那么离群点和噪音是不是一回事呢？我们知道，观测量(Measurement) = 真实数据(True Data) + 噪声 (Noise)。离群点(Outlier)属于观测量，既有可能是真实数据产生的，也有可能是噪声带来的，但是总的来说是和大部分观测量之间有明显不同的观测值。。噪音包括错误值或偏离期望的孤立点值，但也不能说噪声点包含离群点，虽然大部分数据挖掘方法都将离群点视为噪声或异常而丢弃。然而，在一些应用（例如：欺诈检测），会针对离群点做离群点分析或异常挖掘。而且有些点在局部是属于离群点，但从全局看是正常的。</p>
-</blockquote>
-<h2 id="分箱法"><a href="#分箱法" class="headerlink" title="分箱法"></a>分箱法</h2><p>分箱方法通过考察数据的“近邻”（即，周围的值）来光滑有序数据值。这些有序的值被分布到一些“桶”或箱中。由于分箱方法考察近邻的值，因此它进行局部光滑。</p>
-<ul>
-<li>用箱均值光滑</li>
-</ul>
-<p>箱中每一个值被箱中的平均值替换。</p>
-<ul>
-<li>用箱中位数平滑</li>
-</ul>
-<p>箱中的每一个值被箱中的中位数替换。</p>
-<ul>
-<li>用箱边界平滑</li>
-</ul>
-<p>箱中的最大和最小值同样被视为边界。箱中的每一个值被最近的边界值替换。<br>一般而言，宽度越大，光滑效果越明显。箱也可以是等宽的，其中每个箱值的区间范围是个常量。分箱也可以作为一种离散化技术使用.</p>
-<h2 id="回归法"><a href="#回归法" class="headerlink" title="回归法"></a>回归法</h2><p>可以用一个函数拟合数据来光滑数据。线性回归涉及找出拟合两个属性（或变量）的“最佳”直线，使得一个属性能够预测另一个。多线性回归是线性回归的扩展，它涉及多于两个属性，并且数据拟合到一个多维面。使用回归，找出适合数据的数学方程式，能够帮助消除噪声。</p>
-<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a href="https://www.cnblogs.com/charlotte77/p/5606926.html" target="_blank" rel="noopener">https://www.cnblogs.com/charlotte77/p/5606926.html</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/YOLO论文笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -873,7 +675,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/GBDT/">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/CNN总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tauriel">
@@ -892,8 +694,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/28/GBDT/" itemprop="url">
-                  Untitled
+                <a class="post-title-link" href="/2018/09/28/CNN总结/" itemprop="url">
+                  CNN总结
                 </a>
               
             
@@ -919,7 +721,142 @@
                 
               
 
-              <time title="Created: 2018-09-28 21:48:41 / Modified: 22:05:11" itemprop="dateCreated datePublished" datetime="2018-09-28T21:48:41+08:00">2018-09-28</time>
+              <time title="Created: 2018-09-28 21:47:42" itemprop="dateCreated datePublished" datetime="2018-09-28T21:47:42+08:00">2018-09-28</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/GBDT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tauriel">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tauriel' Story">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/28/GBDT/" itemprop="url">
+                  GBDT
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-28 00:00:00 / Modified: 22:07:06" itemprop="dateCreated datePublished" datetime="2018-09-28T00:00:00+08:00">2018-09-28</time>
             
 
             
@@ -1203,7 +1140,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/CNN总结/">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/tips/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tauriel">
@@ -1222,8 +1159,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/28/CNN总结/" itemprop="url">
-                  CNN总结
+                <a class="post-title-link" href="/2018/09/28/tips/" itemprop="url">
+                  Tips
                 </a>
               
             
@@ -1249,9 +1186,13 @@
                 
               
 
-              <time title="Created: 2018-09-28 21:47:42" itemprop="dateCreated datePublished" datetime="2018-09-28T21:47:42+08:00">2018-09-28</time>
+              <time title="Created: 2018-09-28 00:00:00 / Modified: 22:07:54" itemprop="dateCreated datePublished" datetime="2018-09-28T00:00:00+08:00">2018-09-28</time>
             
 
+            
+              
+
+              
             
           </span>
 
@@ -1285,7 +1226,368 @@
       
         
           
+            <ol>
+<li><p>Gnome  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gnome-tweak-tool</span><br><span class="line">sudo apt install gnome-shell-extensions</span><br><span class="line">sudo apt install chrome-gnome-shell</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看运行GPU上的程序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fuser -v /dev/nvidia*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Unsupported locale setting</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/default/<span class="built_in">local</span></span><br><span class="line"><span class="built_in">export</span> LANGUAGE=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> LC_ALL=en_US.UTF-8</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Sorry, ubuntu has experienced an internal error</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/default/apport</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>更换GUN版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc-5 g++-5 </span><br><span class="line">sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 110 --slave /usr/bin/g++ g++ /usr/bin/g++-5 --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-5</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Tmux开启鼠标支持</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux <span class="built_in">set</span> -g mouse on</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>gist.github.com无法打开</p>
+</li>
+</ol>
+<ul>
+<li><a href="http://tool.chinaz.com/dns" target="_blank" rel="noopener">ip查询</a></li>
+<li><p>找到hosts文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Windows 系统位于 C:\Windows\System32\drivers\etc\</span><br><span class="line">Android（安卓）系统hosts位于 /etc/</span><br><span class="line">Mac（苹果电脑）系统hosts位于 /etc/</span><br><span class="line">iPhone（iOS）系统hosts位于 /etc/</span><br><span class="line">Linux系统hosts位于 /etc/</span><br><span class="line">绝大多数Unix系统都是在 /etc/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/hosts</span><br><span class="line"><span class="comment"># 挑选TTL最小的ip</span></span><br><span class="line">192.30.253.118 gist.github.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Windows</span><br><span class="line">开始 -&gt; 运行 -&gt; 输入cmd -&gt; 在CMD窗口输入  ： ipconfig /flushdns</span><br><span class="line"></span><br><span class="line">Linux</span><br><span class="line">终端输入 ：  sudo rcnscd restart</span><br><span class="line"></span><br><span class="line">Mac OS X终端输入 ：  sudo killall -HUP mDNSResponder</span><br><span class="line"></span><br><span class="line">其他：断网，再开网；</span><br><span class="line">终极方法： 重启机器；</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol start="8">
+<li><p>mac查看CPU</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl machdep.cpu</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Mount error: “unknown filesystem type ‘exfat’”</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install exfat-fuse exfat-utils</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>无法打开维基百科</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># add to hosts </span></span><br><span class="line">198.35.26.96 zh.wikipedia.org</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>jupyter安装插件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip install jupyter_contrib_nbextensions</span><br><span class="line">jupyter contrib nbextension install --user</span><br><span class="line">pip install jupyter_nbextensions_configurator</span><br><span class="line">jupyter nbextensions_configurator <span class="built_in">enable</span> --user</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>jupyter 默认</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">%config InlineBackend.figure_format=<span class="string">'retina'</span></span><br><span class="line">plt.style.use(<span class="string">'ggplot'</span>)</span><br><span class="line">plt.rcParams[<span class="string">'figure.figsize'</span>] = (<span class="number">5.0</span>, <span class="number">4.0</span>) </span><br><span class="line">plt.rcParams[<span class="string">'image.interpolation'</span>] = <span class="string">'nearest'</span></span><br><span class="line">plt.rcParams[<span class="string">'image.cmap'</span>] = <span class="string">'gray'</span></span><br><span class="line"></span><br><span class="line">%load_ext autoreload</span><br><span class="line">%autoreload <span class="number">2</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改jupyter主题</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pip install jupyterthemes</span><br><span class="line"><span class="comment"># list </span></span><br><span class="line">jt -l</span><br><span class="line"><span class="comment"># set</span></span><br><span class="line">jt -t -N -T -cellw 100%</span><br><span class="line"><span class="comment"># reset</span></span><br><span class="line">jt -r</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改jupyter默认主题宽度100</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.jupyter/custom/custom.css</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Make the notebook cells take almost all available width */</span></span><br><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">99%</span> <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* Prevent the edit cell highlight box from getting clipped; * important so that it also works when cell is in edit mode*/</span></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-class">.cell</span><span class="selector-class">.selected</span> &#123;</span><br><span class="line">    <span class="attribute">border-left-width</span>: <span class="number">1px</span> <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>RGBA sequence should have length 3 or 4</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Return a contiguous flattened array.</span></span><br><span class="line">np.ravel(Y)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>jupyter 安装py2 kernel</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python2 -m pip install IPython==5.0 --user</span><br><span class="line">python2 -m pip install ipykernel --user</span><br><span class="line">python2 -m ipykernel install --user</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>jupyter 显示所有变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.ipython/profile_default/ipython_config.py</span><br><span class="line">c = get_config()</span><br><span class="line"><span class="comment"># Run all nodes interactively</span></span><br><span class="line">c.InteractiveShell.ast_node_interactivity = <span class="string">"all"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>GPU使用情况</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基于nvidia-smi的软件</span></span><br><span class="line">pip install gpustat</span><br><span class="line">watch --color -n1 gpustat -cpu</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装macvim</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install macvim --with-override-system-vim</span><br><span class="line"><span class="comment"># tmux 无法访问+/*寄存器</span></span><br><span class="line">brew install reattach-to-user-namespace</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>jupyter 使用conda虚拟环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> activate env_name</span><br><span class="line">pip install ipykernel</span><br><span class="line">python -m ipykernel install --user --name env_name</span><br><span class="line"><span class="comment"># 进入jupyter 切换kernel</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>cuda &amp;&amp; Nvidia</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看n安装的nvidia软件</span></span><br><span class="line">sudo dpkg --list | grep nvidia-*</span><br><span class="line"><span class="comment"># 卸载deb安装</span></span><br><span class="line">sudo apt autoremove --purge cuda</span><br><span class="line">sudo rm -r /usr/<span class="built_in">local</span>/cuda-9.0</span><br><span class="line"><span class="comment"># 卸载run安装</span></span><br><span class="line">sudo /usr/<span class="built_in">local</span>/cuda-9.0/bin/uninstall_cuda_9.0.pl</span><br><span class="line">sudo /usr/bin/nvidia-uninstall</span><br><span class="line">sudo reboot</span><br><span class="line"><span class="comment"># 卸载nvidia驱动，进入命令行模式</span></span><br><span class="line">sudo service lightdm stop</span><br><span class="line">sudo apt-get remove --purge nvidia-*</span><br><span class="line">sudo apt-get install ubuntu-desktop</span><br><span class="line">sudo rm /etc/X11/xorg.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'nouveau'</span> | sudo tee -a /etc/modules</span><br><span class="line"><span class="comment"># 安装.run FILE</span></span><br><span class="line">vim /etc/modprobe.d/blacklist-nouveau.conf </span><br><span class="line"></span><br><span class="line">blacklist nouveau</span><br><span class="line">options nouveau modeset=0</span><br><span class="line"></span><br><span class="line">sudo update-initramfs -u</span><br><span class="line"><span class="comment"># 安装nvidia驱动</span></span><br><span class="line">sudo apt-get install build-essential</span><br><span class="line">sudo add-apt-repository ppa:xorg-edgers/ppa</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install nvidia-340</span><br><span class="line"><span class="comment"># 安装cudnn,将include，lib文件拷贝到/usr/local/cuda后赋予用户读权限</span></span><br><span class="line">sudo chmod a+r /usr/<span class="built_in">local</span>/cuda/include/cudnn.h /usr/<span class="built_in">local</span>/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从Github下载子文件夹</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如需下载下面的文件夹</span></span><br><span class="line">https://github.com/tensorflow/models/tree/master/research/audioset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将url中 "/tree/master" 改为 "trunk"</span></span><br><span class="line">svn checkout https://github.com/tensorflow/models/trunk/research/audioset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果是develop分支， /trunk/ 换成 /branches/branchname/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>keras按需分配显存</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> keras.backend.tensorflow_backend <span class="keyword">as</span> KTF</span><br><span class="line"></span><br><span class="line">config = tf.ConfigProto()  </span><br><span class="line"><span class="comment">#不全部占满显存, 按需分配</span></span><br><span class="line">config.gpu_options.allow_growth=<span class="keyword">True</span>   </span><br><span class="line">session = tf.Session(config=config)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置session</span></span><br><span class="line">KTF.set_session(session)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>gzip: stdout: No space left on device</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dpkg -l <span class="string">'linux-image-*'</span> | grep <span class="string">'^ii'</span></span><br><span class="line"><span class="comment"># 查看目前使用的image</span></span><br><span class="line">uname -r</span><br><span class="line"><span class="comment"># 删掉旧image</span></span><br><span class="line">sudo apt-get -f purge linux-image-2.6.35-28-generic</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sh: 1: libtool not found</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libtool-bin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>挂载新硬盘</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查硬盘</span></span><br><span class="line">sudo fdisk -l</span><br><span class="line"><span class="comment"># 新建挂载点</span></span><br><span class="line">sudo mkdir /disk1</span><br><span class="line"><span class="comment"># 查看UUID</span></span><br><span class="line">sudo blkid</span><br><span class="line"><span class="comment"># 挂载</span></span><br><span class="line">sudo mount /dev/sdb /disk1</span><br><span class="line"><span class="comment"># mount: wrong fs type, bad option, bad superblock on /dev/sdb</span></span><br><span class="line">sudo mkfs -t ext4 /dev/sdb</span><br><span class="line"><span class="comment"># 配置开机自动挂载</span></span><br><span class="line">sudo vim /etc/fstab</span><br><span class="line"><span class="comment"># 添加条目</span></span><br><span class="line">UUID=11263962-9715-473f-9421-0b604e895aaa /data ext4 defaults 0 1</span><br><span class="line"><span class="comment"># 检查配置是否正确</span></span><br><span class="line">sudo mount -a</span><br><span class="line"></span><br><span class="line">&lt;fs spec&gt; &lt;fs file&gt; &lt;fs vfstype&gt; &lt;fs mntops&gt; &lt;fs freq&gt; &lt;fs passno&gt;</span><br><span class="line">具体说明，以挂载/dev/sdb1为例：</span><br><span class="line">&lt;fs spec&gt;：分区定位，可以给UUID或LABEL，例如：UUID=6E9ADAC29ADA85CD或LABEL=software</span><br><span class="line">&lt;fs file&gt;：具体挂载点的位置，例如：/data</span><br><span class="line">&lt;fs vfstype&gt;：挂载磁盘类型，linux分区一般为ext4，windows分区一般为ntfs</span><br><span class="line">&lt;fs mntops&gt;：挂载参数，一般为defaults</span><br><span class="line">&lt;fs freq&gt;：磁盘检查，默认为0</span><br><span class="line">&lt;fs passno&gt;：磁盘检查，默认为0，不需要检查</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>pd.read_csv UnicodeDecodeError</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.read_csv(<span class="string">'fname'</span>, encoding=<span class="string">'ISO-8859-1'</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>*.lo is not a valid libtool object</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make clean &amp;make reclean &amp; make distclean 无效</span><br><span class="line">重新下载源码进行编译</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ImportError: cannot import name main</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /usr/bin/pip</span><br><span class="line"></span><br><span class="line"># 最后一行修改</span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    sys.exit(__main__.main())</span><br><span class="line"># or</span><br><span class="line">sudo python -m pip uninstall pip &amp;&amp; sudo apt install python-pip --reinstall</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>executing ‘grub-install /dev/sda’ failed.</p>
+</li>
+<li><p>cannot open shared library</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 共享库文件安装到了/lib or /usr/lib目录下</span><br><span class="line">ldconfig</span><br><span class="line"></span><br><span class="line"># 共享库文件安装到了/usr/local/lib 或其他非/lib or /usr/lib 目录下</span><br><span class="line">执行ldconfig钱，吧共享库目录加入到配置文件/etc/ld.so.conf中</span><br><span class="line">echo &quot;/usr/local/lib&quot; &gt;&gt; /etc/ld.so.conf</span><br><span class="line">ldconfig</span><br><span class="line"></span><br><span class="line"># 没有权限修改配置文件</span><br><span class="line">export LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用root链接ssh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ssh/sshd_config</span><br><span class="line"># PermitRootLogin prohibit-password </span><br><span class="line">PermitRootLogin yes</span><br><span class="line"></span><br><span class="line">sudo service ssh restart</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Could NOT find OpenMP_C (missing: OpenMP_C_FLAGS OpenMP_C_LIB_NAMES)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># clang不支持openmp，需要clang-omp, llvm包含clang-omp</span><br><span class="line">brew install llvm</span><br><span class="line">ln -s /usr/local/opt/llvm/bin/clang /usr/local/bin/clang-omp</span><br><span class="line">ln -s /usr/local/opt/llvm/bin/clang++ /usr/local/bin/clang-omp++</span><br><span class="line"></span><br><span class="line">cmake CC=clag-omp CXX=clag-omp++ ..</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>initializing from file failed</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 对文件没有访问权限</span><br><span class="line">sudo chmod -R 777 dir</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>undefined _gfortran ***</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">修改gcc g++版本</span><br><span class="line">重新安装gfortran</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>git 指令（mac）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line">Git配置</span><br><span class="line">git config --global user.name <span class="string">"robbin"</span>   </span><br><span class="line">git config --global user.email <span class="string">"fankai@gmail.com"</span></span><br><span class="line">git config --global color.ui <span class="literal">true</span></span><br><span class="line">git config --global alias.co checkout</span><br><span class="line">git config --global alias.ci commit</span><br><span class="line">git config --global alias.st status</span><br><span class="line">git config --global alias.br branch</span><br><span class="line">git config --global core.editor <span class="string">"mate -w"</span>    <span class="comment"># 设置Editor使用textmate</span></span><br><span class="line">git config -l  <span class="comment"># 列举所有配置</span></span><br><span class="line">用户的git配置文件~/.gitconfig</span><br><span class="line">git <span class="built_in">help</span> &lt;<span class="built_in">command</span>&gt;  <span class="comment"># 显示command的help</span></span><br><span class="line">git show            <span class="comment"># 显示某次提交的内容</span></span><br><span class="line">git show <span class="variable">$id</span></span><br><span class="line"></span><br><span class="line">git co  -- &lt;file&gt;   <span class="comment"># 抛弃工作区修改</span></span><br><span class="line">git co  .           <span class="comment"># 抛弃工作区修改</span></span><br><span class="line"></span><br><span class="line">git add &lt;file&gt;      <span class="comment"># 将工作文件修改提交到本地暂存区</span></span><br><span class="line">git add .           <span class="comment"># 将所有修改过的工作文件提交暂存区</span></span><br><span class="line"></span><br><span class="line">git rm &lt;file&gt;       <span class="comment"># 从版本库中删除文件</span></span><br><span class="line">git rm &lt;file&gt; --cached  <span class="comment"># 从版本库中删除文件，但不删除文件</span></span><br><span class="line"></span><br><span class="line">git reset &lt;file&gt;    <span class="comment"># 从暂存区恢复到工作文件</span></span><br><span class="line">git reset -- .      <span class="comment"># 从暂存区恢复到工作文件</span></span><br><span class="line">git reset --hard    <span class="comment"># 恢复最近一次提交过的状态，即放弃上次提交后的所有本次修改</span></span><br><span class="line"></span><br><span class="line">git ci &lt;file&gt;</span><br><span class="line">git ci .</span><br><span class="line">git ci -a           <span class="comment"># 将git add, git rm和git ci等操作都合并在一起做</span></span><br><span class="line">git ci -am <span class="string">"some comments"</span></span><br><span class="line">git ci --amend      <span class="comment"># 修改最后一次提交记录</span></span><br><span class="line"></span><br><span class="line">git revert &lt;<span class="variable">$id</span>&gt;    <span class="comment"># 恢复某次提交的状态，恢复动作本身也创建了一次提交对象</span></span><br><span class="line">git revert HEAD     <span class="comment"># 恢复最后一次提交的状态</span></span><br><span class="line">查看文件diff</span><br><span class="line"></span><br><span class="line">git diff &lt;file&gt;     <span class="comment"># 比较当前文件和暂存区文件差异</span></span><br><span class="line">git diff</span><br><span class="line">git diff &lt;<span class="variable">$id1</span>&gt; &lt;<span class="variable">$id2</span>&gt;   <span class="comment"># 比较两次提交之间的差异</span></span><br><span class="line">git diff &lt;branch1&gt;..&lt;branch2&gt; <span class="comment"># 在两个分支之间比较 </span></span><br><span class="line">git diff --staged   <span class="comment"># 比较暂存区和版本库差异</span></span><br><span class="line">git diff --cached   <span class="comment"># 比较暂存区和版本库差异</span></span><br><span class="line">git diff --<span class="built_in">stat</span>     <span class="comment"># 仅仅比较统计信息</span></span><br><span class="line">查看提交记录</span><br><span class="line"></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">git <span class="built_in">log</span> &lt;file&gt;      <span class="comment"># 查看该文件每次提交记录</span></span><br><span class="line">git <span class="built_in">log</span> -p &lt;file&gt;   <span class="comment"># 查看每次详细修改内容的diff</span></span><br><span class="line">git <span class="built_in">log</span> -p -2       <span class="comment"># 查看最近两次详细修改内容的diff</span></span><br><span class="line">git <span class="built_in">log</span> --<span class="built_in">stat</span>      <span class="comment"># 查看提交统计信息</span></span><br><span class="line">tig</span><br><span class="line"></span><br><span class="line">Mac上可以使用tig代替diff和<span class="built_in">log</span>，brew install tig</span><br><span class="line"></span><br><span class="line">Git 本地分支管理</span><br><span class="line">查看、切换、创建和删除分支</span><br><span class="line"></span><br><span class="line">git br -r           <span class="comment"># 查看远程分支</span></span><br><span class="line">git br &lt;new_branch&gt; <span class="comment"># 创建新的分支</span></span><br><span class="line">git br -v           <span class="comment"># 查看各个分支最后提交信息</span></span><br><span class="line">git br --merged     <span class="comment"># 查看已经被合并到当前分支的分支</span></span><br><span class="line">git br --no-merged  <span class="comment"># 查看尚未被合并到当前分支的分支</span></span><br><span class="line"></span><br><span class="line">git co &lt;branch&gt;     <span class="comment"># 切换到某个分支</span></span><br><span class="line">git co -b &lt;new_branch&gt; <span class="comment"># 创建新的分支，并且切换过去</span></span><br><span class="line">git co -b &lt;new_branch&gt; &lt;branch&gt;  <span class="comment"># 基于branch创建新的new_branch</span></span><br><span class="line"></span><br><span class="line">git co <span class="variable">$id</span>          <span class="comment"># 把某次历史提交记录checkout出来，但无分支信息，切换到其他分支会自动删除</span></span><br><span class="line">git co <span class="variable">$id</span> -b &lt;new_branch&gt;  <span class="comment"># 把某次历史提交记录checkout出来，创建成一个分支</span></span><br><span class="line"></span><br><span class="line">git br -d &lt;branch&gt;  <span class="comment"># 删除某个分支</span></span><br><span class="line">git br -D &lt;branch&gt;  <span class="comment"># 强制删除某个分支 (未被合并的分支被删除的时候需要强制)</span></span><br><span class="line">分支合并和rebase</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;               <span class="comment"># 将branch分支合并到当前分支</span></span><br><span class="line">git merge origin/master --no-ff  <span class="comment"># 不要Fast-Foward合并，这样可以生成merge提交</span></span><br><span class="line"></span><br><span class="line">git rebase master &lt;branch&gt;       <span class="comment"># 将master rebase到branch，相当于：</span></span><br><span class="line">git co &lt;branch&gt; &amp;&amp; git rebase master &amp;&amp; git co master &amp;&amp; git merge &lt;branch&gt;</span><br><span class="line">Git补丁管理(方便在多台机器上开发同步时用)</span><br><span class="line">git diff &gt; ../sync.patch         <span class="comment"># 生成补丁</span></span><br><span class="line">git apply ../sync.patch          <span class="comment"># 打补丁</span></span><br><span class="line">git apply --check ../sync.patch  <span class="comment"># 测试补丁能否成功</span></span><br><span class="line">Git暂存管理</span><br><span class="line">git stash                        <span class="comment"># 暂存</span></span><br><span class="line">git stash list                   <span class="comment"># 列所有stash</span></span><br><span class="line">git stash apply                  <span class="comment"># 恢复暂存的内容</span></span><br><span class="line">git stash drop                   <span class="comment"># 删除暂存区</span></span><br><span class="line">Git远程分支管理</span><br><span class="line">git pull                         <span class="comment"># 抓取远程仓库所有分支更新并合并到本地</span></span><br><span class="line">git pull --no-ff                 <span class="comment"># 抓取远程仓库所有分支更新并合并到本地，不要快进合并</span></span><br><span class="line">git fetch origin                 <span class="comment"># 抓取远程仓库更新</span></span><br><span class="line">git merge origin/master          <span class="comment"># 将远程主分支合并到本地当前分支</span></span><br><span class="line">git co --track origin/branch     <span class="comment"># 跟踪某个远程分支创建相应的本地分支</span></span><br><span class="line">git co -b &lt;local_branch&gt; origin/&lt;remote_branch&gt;  <span class="comment"># 基于远程分支创建本地分支，功能同上</span></span><br><span class="line"></span><br><span class="line">git push                         <span class="comment"># push所有分支</span></span><br><span class="line">git push origin master           <span class="comment"># 将本地主分支推到远程主分支</span></span><br><span class="line">git push -u origin master        <span class="comment"># 将本地主分支推到远程(如无远程主分支则创建，用于初始化远程仓库)</span></span><br><span class="line">git push origin &lt;local_branch&gt;   <span class="comment"># 创建远程分支， origin是远程仓库名</span></span><br><span class="line">git push origin &lt;local_branch&gt;:&lt;remote_branch&gt;  <span class="comment"># 创建远程分支</span></span><br><span class="line">git push origin :&lt;remote_branch&gt;  <span class="comment">#先删除本地分支(git br -d &lt;branch&gt;)，然后再push删除远程分支</span></span><br><span class="line">Git远程仓库管理</span><br><span class="line">git remote -v                    <span class="comment"># 查看远程服务器地址和仓库名称</span></span><br><span class="line">git remote show origin           <span class="comment"># 查看远程服务器仓库状态</span></span><br><span class="line">git remote add origin git@github:robbin/robbin_site.git         <span class="comment"># 添加远程仓库地址</span></span><br><span class="line">git remote <span class="built_in">set</span>-url origin git@github.com:robbin/robbin_site.git <span class="comment"># 设置远程仓库地址(用于修改远程仓库地址)</span></span><br><span class="line">git remote rm &lt;repository&gt;       <span class="comment"># 删除远程仓库</span></span><br><span class="line">创建远程仓库</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> --bare robbin_site robbin_site.git  <span class="comment"># 用带版本的项目创建纯版本仓库</span></span><br><span class="line">scp -r my_project.git git@git.csdn.net:~      <span class="comment"># 将纯仓库上传到服务器上</span></span><br><span class="line"></span><br><span class="line">mkdir robbin_site.git &amp;&amp; <span class="built_in">cd</span> robbin_site.git &amp;&amp; git --bare init <span class="comment"># 在服务器创建纯仓库</span></span><br><span class="line">git remote add origin git@github.com:robbin/robbin_site.git    <span class="comment"># 设置远程仓库地址</span></span><br><span class="line">git push -u origin master                                      <span class="comment"># 客户端首次提交</span></span><br><span class="line">git push -u origin develop  <span class="comment"># 首次将本地develop分支提交到远程develop分支，并且track</span></span><br><span class="line"></span><br><span class="line">git remote <span class="built_in">set</span>-head origin master   <span class="comment"># 设置远程仓库的HEAD指向master分支</span></span><br><span class="line">也可以命令设置跟踪远程库和本地库</span><br><span class="line"></span><br><span class="line">git branch --<span class="built_in">set</span>-upstream master origin/master</span><br><span class="line">git branch --<span class="built_in">set</span>-upstream develop origin/develop</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>终端创建github仓库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 无法使用git创建，可以通过github API或者三方软件</span></span><br><span class="line">brew install hub</span><br><span class="line">hub create -h</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看ubuntu版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/issue</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ubuntu用户管理</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加用户</span></span><br><span class="line">sudo adduser liming</span><br><span class="line"><span class="comment"># 移动用户用户组</span></span><br><span class="line">sudo usermod -g group liming</span><br><span class="line"><span class="comment"># 用户获得sudo - （1）</span></span><br><span class="line">sudo usermod -G sudo liming</span><br><span class="line"><span class="comment"># 用户获得sudo - （2）</span></span><br><span class="line">sudo vim /etc/sudoers</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改文件夹所属用户组</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R liming dir</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用conda环境安装python包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ~/anaconda3/bin/python3.6 setup.py install</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>mac打开任何来源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo spctl --master-disable</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>vim翻页</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">整页翻页 ctrl<span class="_">-f</span> ctrl-b</span><br><span class="line">f就是forword b就是backward</span><br><span class="line"></span><br><span class="line">翻半页</span><br><span class="line">ctrl<span class="_">-d</span> ctlr-u</span><br><span class="line">d=down u=up</span><br><span class="line"></span><br><span class="line">滚一行</span><br><span class="line">ctrl<span class="_">-e</span> ctrl-y</span><br><span class="line"></span><br><span class="line">zz 让光标所在的行居屏幕中央</span><br><span class="line">zt 让光标所在的行居屏幕最上一行 t=top</span><br><span class="line">zb 让光标所在的行居屏幕最下一行 b=bottom</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>mac强制结束进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd + opt + esc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CondaHTTPError: HTTP 000 CONNECTION FAILED for url</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加清华源</span></span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span><br><span class="line">conda config --<span class="built_in">set</span> show_channel_urls yes</span><br><span class="line"><span class="comment"># 删除-default行</span></span><br><span class="line">vim ~/.condarc</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>iterm显示中文乱码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加到~/.zshrc</span></span><br><span class="line"><span class="built_in">export</span> LC_ALL=en_US.UTF-8  </span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>mds, mds_store占用CPU</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关闭spotlight</span></span><br><span class="line">sudo mdutil -a -i off</span><br><span class="line"><span class="comment"># 开启</span></span><br><span class="line">sudo mdutil -a -i off</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Unexpected error while saving file: Untitled.ipynb database or disk is full</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rm ~/.local/share/jupyter/nbsignatures.db</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改conda路径名，bad interpreter</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改.../anaconda3/bin/conda</span></span><br><span class="line"><span class="comment">#!/disk5/liming/opt/anaconda3/bin/python</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看隐藏文件大小</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -sh .[!.]*</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/特征工程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tauriel">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tauriel' Story">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/28/特征工程/" itemprop="url">
+                  特征工程
+                </a>
+              
             
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-28 00:00:00 / Modified: 22:07:36" itemprop="dateCreated datePublished" datetime="2018-09-28T00:00:00+08:00">2018-09-28</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="异常值"><a href="#异常值" class="headerlink" title="异常值"></a>异常值</h1><blockquote>
+<p>基于距离度量的方法，对异常值很敏感</p>
+</blockquote>
+<h2 id="可视化分析"><a href="#可视化分析" class="headerlink" title="可视化分析"></a>可视化分析</h2><ul>
+<li>直方图</li>
+<li>散点图</li>
+<li>箱型图</li>
+<li>Q-Q图</li>
+</ul>
+<h2 id="3-sigma-原则"><a href="#3-sigma-原则" class="headerlink" title="3 $\sigma$原则"></a>3 $\sigma$原则</h2><p>如果数据服从正态分布，距离均值3倍标准差的值认为是异常值</p>
+<h2 id="箱型图分析"><a href="#箱型图分析" class="headerlink" title="箱型图分析"></a>箱型图分析</h2><p>箱型图提供了识别异常值的一个标准：如果一个值小于QL01.5IQR或大于OU-1.5IQR的值，则被称为异常值。QL为下四分位数，表示全部观察值中有四分之一的数据取值比它小；QU为上四分位数，表示全部观察值中有四分之一的数据取值比它大；IQR为四分位数间距，是上四分位数QU与下四分位数QL的差值，包含了全部观察值的一半。箱型图判断异常值的方法以四分位数和四分位距为基础，四分位数具有鲁棒性：25%的数据可以变得任意远并且不会干扰四分位数，所以异常值不能对这个标准施加影响。因此箱型图识别异常值比较客观，在识别异常值时有一定的优越性。</p>
+<h2 id="基于距离"><a href="#基于距离" class="headerlink" title="基于距离"></a>基于距离</h2><p>通常可以在对象之间定义邻近性度量，异常对象是那些远离其他对象的对象<br>优缺点：1.简单；2.缺点：基于邻近度的方法需要O(m2)时间，大数据集不适用；3.该方法对参数的选择也是敏感的；4.不能处理具有不同密度区域的数据集，因为它使用全局阈值，不能考虑这种密度的变化。</p>
+<h2 id="基于模型检测"><a href="#基于模型检测" class="headerlink" title="基于模型检测"></a>基于模型检测</h2><p>首先建立一个数据模型，异常是那些同模型不能完美拟合的对象；如果模型是簇的集合，则异常是不显著属于任何簇的对象；在使用回归模型时，异常是相对远离预测值的对象<br>优缺点：1.有坚实的统计学理论基础，当存在充分的数据和所用的检验类型的知识时，这些检验可能非常有效；2.对于多元数据，可用的选择少一些，并且对于高维数据，这些检测可能性很差。</p>
+<h2 id="基于密度"><a href="#基于密度" class="headerlink" title="基于密度"></a>基于密度</h2><p>当一个点的局部密度显著低于它的大部分近邻时才将其分类为离群点。适合非均匀分布的数据。<br>优缺点：1.给出了对象是离群点的定量度量，并且即使数据具有不同的区域也能够很好的处理；2.与基于距离的方法一样，这些方法必然具有O(m2)的时间复杂度。对于低维数据使用特定的数据结构可以达到O(mlogm)；3.参数选择困难。虽然算法通过观察不同的k值，取得最大离群点得分来处理该问题，但是，仍然需要选择这些值的上下界。</p>
+<h2 id="基于聚类"><a href="#基于聚类" class="headerlink" title="基于聚类"></a>基于聚类</h2><p>基于聚类的离群点：一个对象是基于聚类的离群点，如果该对象不强属于任何簇。离群点对初始聚类的影响：如果通过聚类检测离群点，则由于离群点影响聚类，存在一个问题：结构是否有效。为了处理该问题，可以使用如下方法：对象聚类，删除离群点，对象再次聚类（这个不能保证产生最优结果）。<br>优缺点：1.基于线性和接近线性复杂度（k均值）的聚类技术来发现离群点可能是高度有效的；2.簇的定义通常是离群点的补，因此可能同时发现簇和离群点；3.产生的离群点集和它们的得分可能非常依赖所用的簇的个数和数据中离群点的存在性；4.聚类算法产生的簇的质量对该算法产生的离群点的质量影响非常大。</p>
+<h2 id="如何处理"><a href="#如何处理" class="headerlink" title="如何处理"></a>如何处理</h2><p>根据错误类型，人为错误进行修改，自然错误需特别处理</p>
+<ul>
+<li>删除</li>
+<li>变换</li>
+<li>基于统计量修改</li>
+</ul>
+<h1 id="缺失值"><a href="#缺失值" class="headerlink" title="缺失值"></a>缺失值</h1><h2 id="删除特征"><a href="#删除特征" class="headerlink" title="删除特征"></a>删除特征</h2><p>根据特征重要性，重要性较低的，缺失率较高的删除</p>
+<h2 id="统计量填充"><a href="#统计量填充" class="headerlink" title="统计量填充"></a>统计量填充</h2><p>中位数（非均匀分布），均值（均匀分布）</p>
+<h2 id="插值"><a href="#插值" class="headerlink" title="插值"></a>插值</h2><ul>
+<li>随机插补法</li>
+</ul>
+<p>随机选取样本填充</p>
+<ul>
+<li>多重插补法</li>
+</ul>
+<p>通过变量关系对确实数据预测</p>
+<ul>
+<li>热平台插补</li>
+</ul>
+<p>在非缺失样本中找到与缺失样本相似对样本，填充</p>
+<ul>
+<li>拉格朗日插值、牛顿插值<h2 id="模型预测"><a href="#模型预测" class="headerlink" title="模型预测"></a>模型预测</h2>使用该列特征已有条目训练模型，预测空条目<h2 id="特殊处理"><a href="#特殊处理" class="headerlink" title="特殊处理"></a>特殊处理</h2>对于重要性特别高的特征，另行处理</li>
+</ul>
+<h1 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h1><blockquote>
+<p>code</p>
+</blockquote>
+<h1 id="噪声"><a href="#噪声" class="headerlink" title="噪声"></a>噪声</h1><blockquote>
+<p>噪音，是被测量变量的随机误差或方差。我们在上文中提到过异常点（离群点），那么离群点和噪音是不是一回事呢？我们知道，观测量(Measurement) = 真实数据(True Data) + 噪声 (Noise)。离群点(Outlier)属于观测量，既有可能是真实数据产生的，也有可能是噪声带来的，但是总的来说是和大部分观测量之间有明显不同的观测值。。噪音包括错误值或偏离期望的孤立点值，但也不能说噪声点包含离群点，虽然大部分数据挖掘方法都将离群点视为噪声或异常而丢弃。然而，在一些应用（例如：欺诈检测），会针对离群点做离群点分析或异常挖掘。而且有些点在局部是属于离群点，但从全局看是正常的。</p>
+</blockquote>
+<h2 id="分箱法"><a href="#分箱法" class="headerlink" title="分箱法"></a>分箱法</h2><p>分箱方法通过考察数据的“近邻”（即，周围的值）来光滑有序数据值。这些有序的值被分布到一些“桶”或箱中。由于分箱方法考察近邻的值，因此它进行局部光滑。</p>
+<ul>
+<li>用箱均值光滑</li>
+</ul>
+<p>箱中每一个值被箱中的平均值替换。</p>
+<ul>
+<li>用箱中位数平滑</li>
+</ul>
+<p>箱中的每一个值被箱中的中位数替换。</p>
+<ul>
+<li>用箱边界平滑</li>
+</ul>
+<p>箱中的最大和最小值同样被视为边界。箱中的每一个值被最近的边界值替换。<br>一般而言，宽度越大，光滑效果越明显。箱也可以是等宽的，其中每个箱值的区间范围是个常量。分箱也可以作为一种离散化技术使用.</p>
+<h2 id="回归法"><a href="#回归法" class="headerlink" title="回归法"></a>回归法</h2><p>可以用一个函数拟合数据来光滑数据。线性回归涉及找出拟合两个属性（或变量）的“最佳”直线，使得一个属性能够预测另一个。多线性回归是线性回归的扩展，它涉及多于两个属性，并且数据拟合到一个多维面。使用回归，找出适合数据的数学方程式，能够帮助消除噪声。</p>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a href="https://www.cnblogs.com/charlotte77/p/5606926.html" target="_blank" rel="noopener">https://www.cnblogs.com/charlotte77/p/5606926.html</a></p>
+
           
         
       
@@ -1651,320 +1953,6 @@
 <p><em>这时候会开始安装一系列插件，过程<strong>巨慢</strong>， 之前也搜到有其他的管理vim插件的软件，效率比Vundle要高，有兴趣可以尝试</em></p>
 <p><em>安装完可能会有部分插件安装失败</em><br><img src="../image/2018-05-15-20-07-29.png" alt=""></p>
 <p>*这时候可以输入<code>L</code>查看日志情况，根据错误信息去解决，把最新的插件放到<code>~/.vim/bundle</code>文件夹</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/05/14/tips/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tauriel">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tauriel' Story">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/14/tips/" itemprop="url">
-                  Untitled
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-05-14 19:37:22" itemprop="dateCreated datePublished" datetime="2018-05-14T19:37:22+08:00">2018-05-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-09-28 21:52:28" itemprop="dateModified" datetime="2018-09-28T21:52:28+08:00">2018-09-28</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li><p>Gnome  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gnome-tweak-tool</span><br><span class="line">sudo apt install gnome-shell-extensions</span><br><span class="line">sudo apt install chrome-gnome-shell</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看运行GPU上的程序</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fuser -v /dev/nvidia*</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Unsupported locale setting</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/default/<span class="built_in">local</span></span><br><span class="line"><span class="built_in">export</span> LANGUAGE=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br><span class="line"><span class="built_in">export</span> LC_ALL=en_US.UTF-8</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Sorry, ubuntu has experienced an internal error</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/default/apport</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>更换GUN版本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc-5 g++-5 </span><br><span class="line">sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 110 --slave /usr/bin/g++ g++ /usr/bin/g++-5 --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-5</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Tmux开启鼠标支持</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux <span class="built_in">set</span> -g mouse on</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>gist.github.com无法打开</p>
-</li>
-</ol>
-<ul>
-<li><a href="http://tool.chinaz.com/dns" target="_blank" rel="noopener">ip查询</a></li>
-<li><p>找到hosts文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Windows 系统位于 C:\Windows\System32\drivers\etc\</span><br><span class="line">Android（安卓）系统hosts位于 /etc/</span><br><span class="line">Mac（苹果电脑）系统hosts位于 /etc/</span><br><span class="line">iPhone（iOS）系统hosts位于 /etc/</span><br><span class="line">Linux系统hosts位于 /etc/</span><br><span class="line">绝大多数Unix系统都是在 /etc/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/hosts</span><br><span class="line"><span class="comment"># 挑选TTL最小的ip</span></span><br><span class="line">192.30.253.118 gist.github.com</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Windows</span><br><span class="line">开始 -&gt; 运行 -&gt; 输入cmd -&gt; 在CMD窗口输入  ： ipconfig /flushdns</span><br><span class="line"></span><br><span class="line">Linux</span><br><span class="line">终端输入 ：  sudo rcnscd restart</span><br><span class="line"></span><br><span class="line">Mac OS X终端输入 ：  sudo killall -HUP mDNSResponder</span><br><span class="line"></span><br><span class="line">其他：断网，再开网；</span><br><span class="line">终极方法： 重启机器；</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ol start="8">
-<li><p>mac查看CPU</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl machdep.cpu</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Mount error: “unknown filesystem type ‘exfat’”</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install exfat-fuse exfat-utils</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>无法打开维基百科</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># add to hosts </span></span><br><span class="line">198.35.26.96 zh.wikipedia.org</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>jupyter安装插件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip install jupyter_contrib_nbextensions</span><br><span class="line">jupyter contrib nbextension install --user</span><br><span class="line">pip install jupyter_nbextensions_configurator</span><br><span class="line">jupyter nbextensions_configurator <span class="built_in">enable</span> --user</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>jupyter 默认</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">%config InlineBackend.figure_format=<span class="string">'retina'</span></span><br><span class="line">plt.style.use(<span class="string">'ggplot'</span>)</span><br><span class="line">plt.rcParams[<span class="string">'figure.figsize'</span>] = (<span class="number">5.0</span>, <span class="number">4.0</span>) </span><br><span class="line">plt.rcParams[<span class="string">'image.interpolation'</span>] = <span class="string">'nearest'</span></span><br><span class="line">plt.rcParams[<span class="string">'image.cmap'</span>] = <span class="string">'gray'</span></span><br><span class="line"></span><br><span class="line">%load_ext autoreload</span><br><span class="line">%autoreload <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改jupyter主题</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">pip install jupyterthemes</span><br><span class="line"><span class="comment"># list </span></span><br><span class="line">jt -l</span><br><span class="line"><span class="comment"># set</span></span><br><span class="line">jt -t -N -T -cellw 100%</span><br><span class="line"><span class="comment"># reset</span></span><br><span class="line">jt -r</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改jupyter默认主题宽度100</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.jupyter/custom/custom.css</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Make the notebook cells take almost all available width */</span></span><br><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">99%</span> <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* Prevent the edit cell highlight box from getting clipped; * important so that it also works when cell is in edit mode*/</span></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-class">.cell</span><span class="selector-class">.selected</span> &#123;</span><br><span class="line">    <span class="attribute">border-left-width</span>: <span class="number">1px</span> <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>RGBA sequence should have length 3 or 4</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Return a contiguous flattened array.</span></span><br><span class="line">np.ravel(Y)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>jupyter 安装py2 kernel</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python2 -m pip install IPython==5.0 --user</span><br><span class="line">python2 -m pip install ipykernel --user</span><br><span class="line">python2 -m ipykernel install --user</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>jupyter 显示所有变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.ipython/profile_default/ipython_config.py</span><br><span class="line">c = get_config()</span><br><span class="line"><span class="comment"># Run all nodes interactively</span></span><br><span class="line">c.InteractiveShell.ast_node_interactivity = <span class="string">"all"</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>GPU使用情况</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基于nvidia-smi的软件</span></span><br><span class="line">pip install gpustat</span><br><span class="line">watch --color -n1 gpustat -cpu</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装macvim</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install macvim --with-override-system-vim</span><br><span class="line"><span class="comment"># tmux 无法访问+/*寄存器</span></span><br><span class="line">brew install reattach-to-user-namespace</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>jupyter 使用conda虚拟环境</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> activate env_name</span><br><span class="line">pip install ipykernel</span><br><span class="line">python -m ipykernel install --user --name env_name</span><br><span class="line"><span class="comment"># 进入jupyter 切换kernel</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>cuda &amp;&amp; Nvidia</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看n安装的nvidia软件</span></span><br><span class="line">sudo dpkg --list | grep nvidia-*</span><br><span class="line"><span class="comment"># 卸载deb安装</span></span><br><span class="line">sudo apt autoremove --purge cuda</span><br><span class="line">sudo rm -r /usr/<span class="built_in">local</span>/cuda-9.0</span><br><span class="line"><span class="comment"># 卸载run安装</span></span><br><span class="line">sudo /usr/<span class="built_in">local</span>/cuda-9.0/bin/uninstall_cuda_9.0.pl</span><br><span class="line">sudo /usr/bin/nvidia-uninstall</span><br><span class="line">sudo reboot</span><br><span class="line"><span class="comment"># 卸载nvidia驱动，进入命令行模式</span></span><br><span class="line">sudo service lightdm stop</span><br><span class="line">sudo apt-get remove --purge nvidia-*</span><br><span class="line">sudo apt-get install ubuntu-desktop</span><br><span class="line">sudo rm /etc/X11/xorg.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'nouveau'</span> | sudo tee -a /etc/modules</span><br><span class="line"><span class="comment"># 安装.run FILE</span></span><br><span class="line">vim /etc/modprobe.d/blacklist-nouveau.conf </span><br><span class="line"></span><br><span class="line">blacklist nouveau</span><br><span class="line">options nouveau modeset=0</span><br><span class="line"></span><br><span class="line">sudo update-initramfs -u</span><br><span class="line"><span class="comment"># 安装nvidia驱动</span></span><br><span class="line">sudo apt-get install build-essential</span><br><span class="line">sudo add-apt-repository ppa:xorg-edgers/ppa</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install nvidia-340</span><br><span class="line"><span class="comment"># 安装cudnn,将include，lib文件拷贝到/usr/local/cuda后赋予用户读权限</span></span><br><span class="line">sudo chmod a+r /usr/<span class="built_in">local</span>/cuda/include/cudnn.h /usr/<span class="built_in">local</span>/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>从Github下载子文件夹</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如需下载下面的文件夹</span></span><br><span class="line">https://github.com/tensorflow/models/tree/master/research/audioset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将url中 "/tree/master" 改为 "trunk"</span></span><br><span class="line">svn checkout https://github.com/tensorflow/models/trunk/research/audioset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果是develop分支， /trunk/ 换成 /branches/branchname/</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>keras按需分配显存</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> keras.backend.tensorflow_backend <span class="keyword">as</span> KTF</span><br><span class="line"></span><br><span class="line">config = tf.ConfigProto()  </span><br><span class="line"><span class="comment">#不全部占满显存, 按需分配</span></span><br><span class="line">config.gpu_options.allow_growth=<span class="keyword">True</span>   </span><br><span class="line">session = tf.Session(config=config)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置session</span></span><br><span class="line">KTF.set_session(session)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>gzip: stdout: No space left on device</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dpkg -l <span class="string">'linux-image-*'</span> | grep <span class="string">'^ii'</span></span><br><span class="line"><span class="comment"># 查看目前使用的image</span></span><br><span class="line">uname -r</span><br><span class="line"><span class="comment"># 删掉旧image</span></span><br><span class="line">sudo apt-get -f purge linux-image-2.6.35-28-generic</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>sh: 1: libtool not found</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libtool-bin</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>挂载新硬盘</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查硬盘</span></span><br><span class="line">sudo fdisk -l</span><br><span class="line"><span class="comment"># 新建挂载点</span></span><br><span class="line">sudo mkdir /disk1</span><br><span class="line"><span class="comment"># 查看UUID</span></span><br><span class="line">sudo blkid</span><br><span class="line"><span class="comment"># 挂载</span></span><br><span class="line">sudo mount /dev/sdb /disk1</span><br><span class="line"><span class="comment"># mount: wrong fs type, bad option, bad superblock on /dev/sdb</span></span><br><span class="line">sudo mkfs -t ext4 /dev/sdb</span><br><span class="line"><span class="comment"># 配置开机自动挂载</span></span><br><span class="line">sudo vim /etc/fstab</span><br><span class="line"><span class="comment"># 添加条目</span></span><br><span class="line">UUID=11263962-9715-473f-9421-0b604e895aaa /data ext4 defaults 0 1</span><br><span class="line"><span class="comment"># 检查配置是否正确</span></span><br><span class="line">sudo mount -a</span><br><span class="line"></span><br><span class="line">&lt;fs spec&gt; &lt;fs file&gt; &lt;fs vfstype&gt; &lt;fs mntops&gt; &lt;fs freq&gt; &lt;fs passno&gt;</span><br><span class="line">具体说明，以挂载/dev/sdb1为例：</span><br><span class="line">&lt;fs spec&gt;：分区定位，可以给UUID或LABEL，例如：UUID=6E9ADAC29ADA85CD或LABEL=software</span><br><span class="line">&lt;fs file&gt;：具体挂载点的位置，例如：/data</span><br><span class="line">&lt;fs vfstype&gt;：挂载磁盘类型，linux分区一般为ext4，windows分区一般为ntfs</span><br><span class="line">&lt;fs mntops&gt;：挂载参数，一般为defaults</span><br><span class="line">&lt;fs freq&gt;：磁盘检查，默认为0</span><br><span class="line">&lt;fs passno&gt;：磁盘检查，默认为0，不需要检查</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>pd.read_csv UnicodeDecodeError</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pd.read_csv(<span class="string">'fname'</span>, encoding=<span class="string">'ISO-8859-1'</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>*.lo is not a valid libtool object</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make clean &amp;make reclean &amp; make distclean 无效</span><br><span class="line">重新下载源码进行编译</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ImportError: cannot import name main</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /usr/bin/pip</span><br><span class="line"></span><br><span class="line"># 最后一行修改</span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    sys.exit(__main__.main())</span><br><span class="line"># or</span><br><span class="line">sudo python -m pip uninstall pip &amp;&amp; sudo apt install python-pip --reinstall</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>executing ‘grub-install /dev/sda’ failed.</p>
-</li>
-<li><p>cannot open shared library</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 共享库文件安装到了/lib or /usr/lib目录下</span><br><span class="line">ldconfig</span><br><span class="line"></span><br><span class="line"># 共享库文件安装到了/usr/local/lib 或其他非/lib or /usr/lib 目录下</span><br><span class="line">执行ldconfig钱，吧共享库目录加入到配置文件/etc/ld.so.conf中</span><br><span class="line">echo &quot;/usr/local/lib&quot; &gt;&gt; /etc/ld.so.conf</span><br><span class="line">ldconfig</span><br><span class="line"></span><br><span class="line"># 没有权限修改配置文件</span><br><span class="line">export LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用root链接ssh</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/ssh/sshd_config</span><br><span class="line"># PermitRootLogin prohibit-password </span><br><span class="line">PermitRootLogin yes</span><br><span class="line"></span><br><span class="line">sudo service ssh restart</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Could NOT find OpenMP_C (missing: OpenMP_C_FLAGS OpenMP_C_LIB_NAMES)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># clang不支持openmp，需要clang-omp, llvm包含clang-omp</span><br><span class="line">brew install llvm</span><br><span class="line">ln -s /usr/local/opt/llvm/bin/clang /usr/local/bin/clang-omp</span><br><span class="line">ln -s /usr/local/opt/llvm/bin/clang++ /usr/local/bin/clang-omp++</span><br><span class="line"></span><br><span class="line">cmake CC=clag-omp CXX=clag-omp++ ..</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>initializing from file failed</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 对文件没有访问权限</span><br><span class="line">sudo chmod -R 777 dir</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>undefined _gfortran ***</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">修改gcc g++版本</span><br><span class="line">重新安装gfortran</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>git 指令（mac）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line">Git配置</span><br><span class="line">git config --global user.name <span class="string">"robbin"</span>   </span><br><span class="line">git config --global user.email <span class="string">"fankai@gmail.com"</span></span><br><span class="line">git config --global color.ui <span class="literal">true</span></span><br><span class="line">git config --global alias.co checkout</span><br><span class="line">git config --global alias.ci commit</span><br><span class="line">git config --global alias.st status</span><br><span class="line">git config --global alias.br branch</span><br><span class="line">git config --global core.editor <span class="string">"mate -w"</span>    <span class="comment"># 设置Editor使用textmate</span></span><br><span class="line">git config -l  <span class="comment"># 列举所有配置</span></span><br><span class="line">用户的git配置文件~/.gitconfig</span><br><span class="line">git <span class="built_in">help</span> &lt;<span class="built_in">command</span>&gt;  <span class="comment"># 显示command的help</span></span><br><span class="line">git show            <span class="comment"># 显示某次提交的内容</span></span><br><span class="line">git show <span class="variable">$id</span></span><br><span class="line"></span><br><span class="line">git co  -- &lt;file&gt;   <span class="comment"># 抛弃工作区修改</span></span><br><span class="line">git co  .           <span class="comment"># 抛弃工作区修改</span></span><br><span class="line"></span><br><span class="line">git add &lt;file&gt;      <span class="comment"># 将工作文件修改提交到本地暂存区</span></span><br><span class="line">git add .           <span class="comment"># 将所有修改过的工作文件提交暂存区</span></span><br><span class="line"></span><br><span class="line">git rm &lt;file&gt;       <span class="comment"># 从版本库中删除文件</span></span><br><span class="line">git rm &lt;file&gt; --cached  <span class="comment"># 从版本库中删除文件，但不删除文件</span></span><br><span class="line"></span><br><span class="line">git reset &lt;file&gt;    <span class="comment"># 从暂存区恢复到工作文件</span></span><br><span class="line">git reset -- .      <span class="comment"># 从暂存区恢复到工作文件</span></span><br><span class="line">git reset --hard    <span class="comment"># 恢复最近一次提交过的状态，即放弃上次提交后的所有本次修改</span></span><br><span class="line"></span><br><span class="line">git ci &lt;file&gt;</span><br><span class="line">git ci .</span><br><span class="line">git ci -a           <span class="comment"># 将git add, git rm和git ci等操作都合并在一起做</span></span><br><span class="line">git ci -am <span class="string">"some comments"</span></span><br><span class="line">git ci --amend      <span class="comment"># 修改最后一次提交记录</span></span><br><span class="line"></span><br><span class="line">git revert &lt;<span class="variable">$id</span>&gt;    <span class="comment"># 恢复某次提交的状态，恢复动作本身也创建了一次提交对象</span></span><br><span class="line">git revert HEAD     <span class="comment"># 恢复最后一次提交的状态</span></span><br><span class="line">查看文件diff</span><br><span class="line"></span><br><span class="line">git diff &lt;file&gt;     <span class="comment"># 比较当前文件和暂存区文件差异</span></span><br><span class="line">git diff</span><br><span class="line">git diff &lt;<span class="variable">$id1</span>&gt; &lt;<span class="variable">$id2</span>&gt;   <span class="comment"># 比较两次提交之间的差异</span></span><br><span class="line">git diff &lt;branch1&gt;..&lt;branch2&gt; <span class="comment"># 在两个分支之间比较 </span></span><br><span class="line">git diff --staged   <span class="comment"># 比较暂存区和版本库差异</span></span><br><span class="line">git diff --cached   <span class="comment"># 比较暂存区和版本库差异</span></span><br><span class="line">git diff --<span class="built_in">stat</span>     <span class="comment"># 仅仅比较统计信息</span></span><br><span class="line">查看提交记录</span><br><span class="line"></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line">git <span class="built_in">log</span> &lt;file&gt;      <span class="comment"># 查看该文件每次提交记录</span></span><br><span class="line">git <span class="built_in">log</span> -p &lt;file&gt;   <span class="comment"># 查看每次详细修改内容的diff</span></span><br><span class="line">git <span class="built_in">log</span> -p -2       <span class="comment"># 查看最近两次详细修改内容的diff</span></span><br><span class="line">git <span class="built_in">log</span> --<span class="built_in">stat</span>      <span class="comment"># 查看提交统计信息</span></span><br><span class="line">tig</span><br><span class="line"></span><br><span class="line">Mac上可以使用tig代替diff和<span class="built_in">log</span>，brew install tig</span><br><span class="line"></span><br><span class="line">Git 本地分支管理</span><br><span class="line">查看、切换、创建和删除分支</span><br><span class="line"></span><br><span class="line">git br -r           <span class="comment"># 查看远程分支</span></span><br><span class="line">git br &lt;new_branch&gt; <span class="comment"># 创建新的分支</span></span><br><span class="line">git br -v           <span class="comment"># 查看各个分支最后提交信息</span></span><br><span class="line">git br --merged     <span class="comment"># 查看已经被合并到当前分支的分支</span></span><br><span class="line">git br --no-merged  <span class="comment"># 查看尚未被合并到当前分支的分支</span></span><br><span class="line"></span><br><span class="line">git co &lt;branch&gt;     <span class="comment"># 切换到某个分支</span></span><br><span class="line">git co -b &lt;new_branch&gt; <span class="comment"># 创建新的分支，并且切换过去</span></span><br><span class="line">git co -b &lt;new_branch&gt; &lt;branch&gt;  <span class="comment"># 基于branch创建新的new_branch</span></span><br><span class="line"></span><br><span class="line">git co <span class="variable">$id</span>          <span class="comment"># 把某次历史提交记录checkout出来，但无分支信息，切换到其他分支会自动删除</span></span><br><span class="line">git co <span class="variable">$id</span> -b &lt;new_branch&gt;  <span class="comment"># 把某次历史提交记录checkout出来，创建成一个分支</span></span><br><span class="line"></span><br><span class="line">git br -d &lt;branch&gt;  <span class="comment"># 删除某个分支</span></span><br><span class="line">git br -D &lt;branch&gt;  <span class="comment"># 强制删除某个分支 (未被合并的分支被删除的时候需要强制)</span></span><br><span class="line">分支合并和rebase</span><br><span class="line"></span><br><span class="line">git merge &lt;branch&gt;               <span class="comment"># 将branch分支合并到当前分支</span></span><br><span class="line">git merge origin/master --no-ff  <span class="comment"># 不要Fast-Foward合并，这样可以生成merge提交</span></span><br><span class="line"></span><br><span class="line">git rebase master &lt;branch&gt;       <span class="comment"># 将master rebase到branch，相当于：</span></span><br><span class="line">git co &lt;branch&gt; &amp;&amp; git rebase master &amp;&amp; git co master &amp;&amp; git merge &lt;branch&gt;</span><br><span class="line">Git补丁管理(方便在多台机器上开发同步时用)</span><br><span class="line">git diff &gt; ../sync.patch         <span class="comment"># 生成补丁</span></span><br><span class="line">git apply ../sync.patch          <span class="comment"># 打补丁</span></span><br><span class="line">git apply --check ../sync.patch  <span class="comment"># 测试补丁能否成功</span></span><br><span class="line">Git暂存管理</span><br><span class="line">git stash                        <span class="comment"># 暂存</span></span><br><span class="line">git stash list                   <span class="comment"># 列所有stash</span></span><br><span class="line">git stash apply                  <span class="comment"># 恢复暂存的内容</span></span><br><span class="line">git stash drop                   <span class="comment"># 删除暂存区</span></span><br><span class="line">Git远程分支管理</span><br><span class="line">git pull                         <span class="comment"># 抓取远程仓库所有分支更新并合并到本地</span></span><br><span class="line">git pull --no-ff                 <span class="comment"># 抓取远程仓库所有分支更新并合并到本地，不要快进合并</span></span><br><span class="line">git fetch origin                 <span class="comment"># 抓取远程仓库更新</span></span><br><span class="line">git merge origin/master          <span class="comment"># 将远程主分支合并到本地当前分支</span></span><br><span class="line">git co --track origin/branch     <span class="comment"># 跟踪某个远程分支创建相应的本地分支</span></span><br><span class="line">git co -b &lt;local_branch&gt; origin/&lt;remote_branch&gt;  <span class="comment"># 基于远程分支创建本地分支，功能同上</span></span><br><span class="line"></span><br><span class="line">git push                         <span class="comment"># push所有分支</span></span><br><span class="line">git push origin master           <span class="comment"># 将本地主分支推到远程主分支</span></span><br><span class="line">git push -u origin master        <span class="comment"># 将本地主分支推到远程(如无远程主分支则创建，用于初始化远程仓库)</span></span><br><span class="line">git push origin &lt;local_branch&gt;   <span class="comment"># 创建远程分支， origin是远程仓库名</span></span><br><span class="line">git push origin &lt;local_branch&gt;:&lt;remote_branch&gt;  <span class="comment"># 创建远程分支</span></span><br><span class="line">git push origin :&lt;remote_branch&gt;  <span class="comment">#先删除本地分支(git br -d &lt;branch&gt;)，然后再push删除远程分支</span></span><br><span class="line">Git远程仓库管理</span><br><span class="line">git remote -v                    <span class="comment"># 查看远程服务器地址和仓库名称</span></span><br><span class="line">git remote show origin           <span class="comment"># 查看远程服务器仓库状态</span></span><br><span class="line">git remote add origin git@github:robbin/robbin_site.git         <span class="comment"># 添加远程仓库地址</span></span><br><span class="line">git remote <span class="built_in">set</span>-url origin git@github.com:robbin/robbin_site.git <span class="comment"># 设置远程仓库地址(用于修改远程仓库地址)</span></span><br><span class="line">git remote rm &lt;repository&gt;       <span class="comment"># 删除远程仓库</span></span><br><span class="line">创建远程仓库</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> --bare robbin_site robbin_site.git  <span class="comment"># 用带版本的项目创建纯版本仓库</span></span><br><span class="line">scp -r my_project.git git@git.csdn.net:~      <span class="comment"># 将纯仓库上传到服务器上</span></span><br><span class="line"></span><br><span class="line">mkdir robbin_site.git &amp;&amp; <span class="built_in">cd</span> robbin_site.git &amp;&amp; git --bare init <span class="comment"># 在服务器创建纯仓库</span></span><br><span class="line">git remote add origin git@github.com:robbin/robbin_site.git    <span class="comment"># 设置远程仓库地址</span></span><br><span class="line">git push -u origin master                                      <span class="comment"># 客户端首次提交</span></span><br><span class="line">git push -u origin develop  <span class="comment"># 首次将本地develop分支提交到远程develop分支，并且track</span></span><br><span class="line"></span><br><span class="line">git remote <span class="built_in">set</span>-head origin master   <span class="comment"># 设置远程仓库的HEAD指向master分支</span></span><br><span class="line">也可以命令设置跟踪远程库和本地库</span><br><span class="line"></span><br><span class="line">git branch --<span class="built_in">set</span>-upstream master origin/master</span><br><span class="line">git branch --<span class="built_in">set</span>-upstream develop origin/develop</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>终端创建github仓库</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 无法使用git创建，可以通过github API或者三方软件</span></span><br><span class="line">brew install hub</span><br><span class="line">hub create -h</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看ubuntu版本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/issue</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ubuntu用户管理</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加用户</span></span><br><span class="line">sudo adduser liming</span><br><span class="line"><span class="comment"># 移动用户用户组</span></span><br><span class="line">sudo usermod -g group liming</span><br><span class="line"><span class="comment"># 用户获得sudo - （1）</span></span><br><span class="line">sudo usermod -G sudo liming</span><br><span class="line"><span class="comment"># 用户获得sudo - （2）</span></span><br><span class="line">sudo vim /etc/sudoers</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改文件夹所属用户组</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R liming dir</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用conda环境安装python包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ~/anaconda3/bin/python3.6 setup.py install</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>mac打开任何来源</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo spctl --master-disable</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>vim翻页</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">整页翻页 ctrl<span class="_">-f</span> ctrl-b</span><br><span class="line">f就是forword b就是backward</span><br><span class="line"></span><br><span class="line">翻半页</span><br><span class="line">ctrl<span class="_">-d</span> ctlr-u</span><br><span class="line">d=down u=up</span><br><span class="line"></span><br><span class="line">滚一行</span><br><span class="line">ctrl<span class="_">-e</span> ctrl-y</span><br><span class="line"></span><br><span class="line">zz 让光标所在的行居屏幕中央</span><br><span class="line">zt 让光标所在的行居屏幕最上一行 t=top</span><br><span class="line">zb 让光标所在的行居屏幕最下一行 b=bottom</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>mac强制结束进程</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmd + opt + esc</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>CondaHTTPError: HTTP 000 CONNECTION FAILED for url</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加清华源</span></span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</span><br><span class="line">conda config --<span class="built_in">set</span> show_channel_urls yes</span><br><span class="line"><span class="comment"># 删除-default行</span></span><br><span class="line">vim ~/.condarc</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>iterm显示中文乱码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加到~/.zshrc</span></span><br><span class="line"><span class="built_in">export</span> LC_ALL=en_US.UTF-8  </span><br><span class="line"><span class="built_in">export</span> LANG=en_US.UTF-8</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>mds, mds_store占用CPU</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关闭spotlight</span></span><br><span class="line">sudo mdutil -a -i off</span><br><span class="line"><span class="comment"># 开启</span></span><br><span class="line">sudo mdutil -a -i off</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Unexpected error while saving file: Untitled.ipynb database or disk is full</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rm ~/.local/share/jupyter/nbsignatures.db</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改conda路径名，bad interpreter</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改.../anaconda3/bin/conda</span></span><br><span class="line"><span class="comment">#!/disk5/liming/opt/anaconda3/bin/python</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看隐藏文件大小</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">du -sh .[!.]*</span><br></pre></td></tr></table></figure></li>
-</ol>
 
           
         
