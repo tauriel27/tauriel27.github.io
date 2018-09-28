@@ -336,7 +336,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/YOLO论文笔记/">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/01/CNN总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tauriel">
@@ -355,7 +355,560 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/28/YOLO论文笔记/" itemprop="url">
+                <a class="post-title-link" href="/2018/09/01/CNN总结/" itemprop="url">
+                  CNN总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-01 08:00:00" itemprop="dateCreated datePublished" datetime="2018-09-01T08:00:00+08:00">2018-09-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-28 22:35:46" itemprop="dateModified" datetime="2018-09-28T22:35:46+08:00">2018-09-28</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>卷积网络减少参数</p>
+<ol>
+<li>parameter sharing<br> 使用同一个featrure detector</li>
+<li>sparsity of connection<br>feature map中每个元素只和输入图像中的部分pixel相关</li>
+</ol>
+<h2 id="padding"><a href="#padding" class="headerlink" title="padding"></a>padding</h2><ul>
+<li>filter size<br>  <code>n + 2p - f + 1</code>  </li>
+<li>filter size为奇数<ol>
+<li>如果padding模式为same，那只能进行非对称填充<br> <code>p = (f - 1) / 2</code></li>
+<li>central pixel 指出filter位置<h2 id="stride"><a href="#stride" class="headerlink" title="stride"></a>stride</h2></li>
+</ol>
+</li>
+<li>filter size<br>  <code>(n + 2p - f) // s + 1</code></li>
+</ul>
+<h2 id="向量乘法"><a href="#向量乘法" class="headerlink" title="向量乘法"></a>向量乘法</h2><blockquote>
+<p><code>点积</code>（dot product）= <code>内积</code>（inner product）<code>数量积</code>（scalar product）<br><img src="/2018/09/01/CNN总结/image/2018-05-10-21-58-01.png" alt=""><br><img src="/2018/09/01/CNN总结/image/2018-05-10-21-59-03.png" alt=""></p>
+</blockquote>
+<blockquote>
+<p><code>叉积</code>（cross product）<code>外积</code>（outer product）<code>向量积</code>（vector product）<img src="/2018/09/01/CNN总结/image/2018-05-10-22-01-11.png" alt=""></p>
+</blockquote>
+<h2 id="4-He-initialization"><a href="#4-He-initialization" class="headerlink" title="4 - He initialization"></a>4 - He initialization</h2><p>Finally, try “He Initialization”; this is named for the first author of He et al., 2015. (If you have heard of “Xavier initialization”, this is similar except Xavier initialization uses a scaling factor for the weights $W^{[l]}$ of <code>sqrt(1./layers_dims[l-1])</code> where He initialization would use <code>sqrt(2./layers_dims[l-1])</code>.)</p>
+<p><strong>Exercise</strong>: Implement the following function to initialize your parameters with He initialization.</p>
+<p><strong>Hint</strong>: This function is similar to the previous <code>initialize_parameters_random(...)</code>. The only difference is that instead of multiplying <code>np.random.randn(..,..)</code> by 10, you will multiply it by $\sqrt{\frac{2}{\text{dimension of the previous layer}}}$, which is what He initialization recommends for layers with a ReLU activation. </p>
+<h2 id="VGG-ICLR-2015"><a href="#VGG-ICLR-2015" class="headerlink" title="VGG (ICLR 2015)"></a>VGG (ICLR 2015)</h2><h3 id="SUMMARY"><a href="#SUMMARY" class="headerlink" title="SUMMARY"></a>SUMMARY</h3><ul>
+<li><code>3x3</code> kernel   <font color="red"> <em>这个size是能表示上下、左右、中心的最小尺寸</em></font></li>
+<li>3 <em> <code>3x3</code> kernel vs 1 </em> <code>7x7</code> kernel<ol>
+<li>有相同的感受野</li>
+<li>更少的参数量  </li>
+<li>三个relu使得决策函数区别能力更强</li>
+<li>This can be seen as imposing a regularisation on the 7 × 7 conv. filters, forcing them to have a decomposition through the 3 × 3 filters (with non-linearity injected in between).</li>
+</ol>
+</li>
+<li><code>1x1</code> kernel <a href=""></a><br>可以看作是对输入通道的一次线性变换</li>
+</ul>
+<h3 id="PREPROCESSING"><a href="#PREPROCESSING" class="headerlink" title="PREPROCESSING"></a>PREPROCESSING</h3><p>subtracting the mean RGB value, computed on the training set, from each pixel.</p>
+<h3 id="ARCHITECTURE"><a href="#ARCHITECTURE" class="headerlink" title="ARCHITECTURE"></a>ARCHITECTURE</h3><p><img src="/2018/09/01/CNN总结/image/2018-05-29-15-20-23.png" alt=""><br><img src="/2018/09/01/CNN总结/image/2018-05-29-15-20-58.png" alt=""></p>
+<h3 id="TRAINING"><a href="#TRAINING" class="headerlink" title="TRAINING"></a>TRAINING</h3><ul>
+<li>loss<br>multinomial logistic regression objective</li>
+<li>optimizer<br>mini-batch gradient descent with momentum</li>
+<li>batch size<br>256</li>
+<li>momentum<br>0.9</li>
+<li>L2 penalty<br>multiplier set to 5 · 10−4</li>
+<li>dropout<br>first two fully-connected layers (dropout ratio set to 0.5)</li>
+<li>learning rate<br>initially set to 10−2, and then decreased by a factor of 10 when the validation set accuracy stopped improving</li>
+<li>epoch<br>In total, the learning rate was decreased 3 times, and the learning was stopped after 370K iterations (74 epochs)</li>
+</ul>
+<h2 id="Inception-v1"><a href="#Inception-v1" class="headerlink" title="Inception-v1"></a>Inception-v1</h2><h3 id="SUMMARY-1"><a href="#SUMMARY-1" class="headerlink" title="SUMMARY"></a>SUMMARY</h3><ul>
+<li>Inception module<br><img src="/2018/09/01/CNN总结/image/2018-05-30-10-29-33.png" alt=""></li>
+</ul>
+<h2 id="Inception-v2"><a href="#Inception-v2" class="headerlink" title="Inception-v2"></a>Inception-v2</h2><h3 id="SUMMARY-2"><a href="#SUMMARY-2" class="headerlink" title="SUMMARY"></a>SUMMARY</h3><ul>
+<li>Batch Normalization</li>
+</ul>
+<h2 id="Inception-v3"><a href="#Inception-v3" class="headerlink" title="Inception-v3"></a>Inception-v3</h2><h3 id="SUMMARY-3"><a href="#SUMMARY-3" class="headerlink" title="SUMMARY"></a>SUMMARY</h3><ul>
+<li>Factorization into small convolutions<br>一个二维卷积拆分为两个一维卷积（3<em>3 -&gt; 3</em>1 &amp; 1*3,节约了大量参数，同时增加了一层非线性的扩展模型表达能力。</li>
+<li>优化Inception module<br>分支中使用分支（Network in Network in Network)</li>
+</ul>
+<p><img src="/2018/09/01/CNN总结/image/2018-05-30-10-37-33.png" alt=""><br><img src="/2018/09/01/CNN总结/image/2018-05-30-10-37-54.png" alt=""></p>
+<h2 id="Inception-v4"><a href="#Inception-v4" class="headerlink" title="Inception-v4"></a>Inception-v4</h2><h3 id="SUMMARY-4"><a href="#SUMMARY-4" class="headerlink" title="SUMMARY"></a>SUMMARY</h3><ul>
+<li>结合ResNet</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/01/GBDT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tauriel">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tauriel' Story">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/01/GBDT/" itemprop="url">
+                  GBDT
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-01 08:00:00" itemprop="dateCreated datePublished" datetime="2018-09-01T08:00:00+08:00">2018-09-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-28 22:35:07" itemprop="dateModified" datetime="2018-09-28T22:35:07+08:00">2018-09-28</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Regression-Tree-and-Ensemble"><a href="#Regression-Tree-and-Ensemble" class="headerlink" title="Regression Tree and Ensemble"></a>Regression Tree and Ensemble</h1><blockquote>
+<p>The tree ensemble model consists of a set of classification and regression trees (CART). </p>
+<ul>
+<li>CART</li>
+</ul>
+</blockquote>
+<p>We classify the members of a family into different leaves, and assign them the score on the corresponding leaf. A CART is a bit different from decision trees, in which the leaf only contains decision values.</p>
+<p><img src="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/cart.png" alt="alt"></p>
+<blockquote>
+<p>regression tree is a function that maps the attributes to the score</p>
+</blockquote>
+<ul>
+<li>Regression Tree Ensemble</li>
+</ul>
+<p>Usually, a single tree is not strong enough to be used in practice. What is actually used is the ensemble model, which sums the prediction of multiple trees together.</p>
+<p><img src="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/twocart.png" alt="alt"></p>
+<p>Mathematically, we can write our model in the form.where $K$<br> is the number of trees, $f$ is a function in the functional space $\mathcal{F}$, and $\mathcal{F}$ is the set of all possible CARTs. </p>
+<p>$$\hat{y}<em>i = \sum</em>{k=1}^K f_k(x_i), f_k \in \mathcal{F}$$</p>
+<ul>
+<li><p>How can we learn functions?</p>
+<ul>
+<li><p>I want to predict whether I like romantic music at time t</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-14-59-26.png" alt=""></p>
+</li>
+<li><p>Things we need to learn</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-15-00-37.png" alt=""></p>
+</li>
+<li><p>Objective for single variable regression tree(step functions)</p>
+<ul>
+<li>Training Loss: How will the function fit on the points?</li>
+<li>Regularization: How do we define complexity of the function?<ul>
+<li>Number of splitting points, l2 norm of the height in each segment?</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Define objective (loss, regularization), and optimize it!!</li>
+</ul>
+<p>The objective function to be optimized is given by</p>
+<p>$$\text{obj}(\theta) = \sum_i^n l(y_i, \hat{y}<em>i) + \sum</em>{k=1}^K \Omega(f_k)$$<br>where $L$<br>is the training loss function, and $Ω$<br>is the regularization term.</p>
+</li>
+<li><p>Bias-variance tradeoff</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-15-03-04.png" alt=""></p>
+<blockquote>
+<p>Regression tree ensemble defines how you make the prediction score, it can be used for Classification, Regression, Ranking….It all depends on how you define the objective function!</p>
+</blockquote>
+<h1 id="Boosting-Tree"><a href="#Boosting-Tree" class="headerlink" title="Boosting Tree"></a>Boosting Tree</h1><ul>
+<li>Boosting</li>
+</ul>
+<blockquote>
+<p>Boosting 是一族可将弱学习器提升为强学习器的算法。先从初始训练集训练出一个基学习器，然后根据基学习器的表现对训练样本分布进行调整，使得先前基学习器做错的训练样本受到更多的关注，然后基于调整后的样本分布来训练下一个基学习器，如此重复，直至基学习器数目达到指定值T，最终将这T个基学习器进行加权结合。</p>
+<ul>
+<li>AdaBoost (Adaptive Boosting)</li>
+</ul>
+</blockquote>
+<p>基学习器的线性组合（additive model）</p>
+<p>$$H(x)=\sum_{t=1}^T \alpha_th_t(x)$$</p>
+<p>来最小化指数损失函数（exponential loss function）</p>
+<p>$$\ell_{exp}(H\rvert D)=\mathbb{E}_{x\thicksim\mathcal{D}}[e^{-f(x)H(x)}]$$</p>
+<p>算法流程如下</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-19-53-44.png" alt=""></p>
+<ul>
+<li><p>AdaBoost算法解释</p>
+<blockquote>
+<p>AdaBoost算法是模型为加法模型、损失函数为指数函数、学习算法为向前分步算法时的二分类学习方法</p>
+</blockquote>
+<ul>
+<li><p>加法模型（additive model）</p>
+<p>$$f(x)=\sum_{m=1}^M\beta_mb(x;\gamma_m)$$<br>其中，$b(x;\gamma_m)$为基函数，$\gamma_m$为基函数的参数，$\beta_m$为基函数的系数，显然AdaBoost最终分类器线性组合 $f(x)=\sum_{m=1}^M\alpha_mG_m(x)$ 是一个加法模型。</p>
+</li>
+<li><p>向前分步加法模型</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-20-47-53.png" alt=""></p>
+</li>
+<li>问题的分解<br><img src="/2018/09/01/GBDT/image/2018-09-26-21-07-17.png" alt=""><br><img src="/2018/09/01/GBDT/image/2018-09-26-21-07-57.png" alt=""><br>前向分步算法将同时求解从 $m$=1 到 $M$ 所有参数的优化问题，简化为逐次求解各个参数的优化问题。</li>
+</ul>
+</li>
+<li><p>AdaBoost算法推导</p>
+<ul>
+<li><p>使用指数损失函数</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-21-12-56.png" alt=""></p>
+</li>
+<li><p>前向分步算法</p>
+<p>$$f(x_i)=f_{m-1}(x_i)+\beta_mG(x_i)$$<br>带入loss function</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-21-17-06.png" alt=""></p>
+<p>$$w_i^{(m)}=exp(-y_if_{m-1}(x_i))$$</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-21-19-29.png" alt=""></p>
+<p>$w_i^{(m)}$ 跟 $\beta$ 和 $G$都不相关，可以看作迭代中添加的一个系数，和 $f_{m-1}(x_i)$ 相关，所以该系数随着迭代会改变</p>
+<p>现证明上式中达到最小 $\beta^<em>_m G^</em>_m$ 的就是AdaBoost算法中的$\beta_m G_m$，当 $\beta&gt;0$</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-21-32-21.png" alt=""><br>此分类器是使 $m$ 轮加权训练数据分类误差率最小的基本分类器</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-21-38-46.png" alt=""><br><img src="/2018/09/01/GBDT/image/2018-09-26-21-38-55.png" alt=""></p>
+<p>将求得的 $G^*_m(x)$ 代入上式，对 $\beta$ 求导并使倒数为0，即可得到最小的 $\beta$</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-21-41-07.png" alt=""></p>
+<p>$err_m$是分类误差率</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-21-41-39.png" alt=""></p>
+<p>再看权值更新</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-26-21-45-26.png" alt=""></p>
+<p>可以看出与AdaBoost各步骤等价</p>
+</li>
+</ul>
+</li>
+<li><p>Boosting Tree 总结</p>
+<blockquote>
+<p>提升树实际采用加法模型与前向分步算法，以决策树为基函数的提升方法。对分类问题决策树是二叉分类树，对回归问题是二叉回归树</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/2018/09/01/GBDT/image/2018-09-27-10-35-45.png" alt=""></p>
+<h1 id="Gradient-Boosting-Decision-Tree（MART）"><a href="#Gradient-Boosting-Decision-Tree（MART）" class="headerlink" title="Gradient Boosting Decision Tree（MART）"></a>Gradient Boosting Decision Tree（MART）</h1><blockquote>
+<p>AdaBoost通过提高错分数据点的权重来改进模型，而梯度提升树通过计算负梯度来改进模型。回归问题的提升树通过拟合残差学习回归树，这个残差是采用Squared error损失函数的负梯度，是梯度提升树的一种情况。</p>
+</blockquote>
+<p><img src="/2018/09/01/GBDT/image/2018-09-27-10-28-18.png" alt=""></p>
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><ul>
+<li>二阶泰勒展开+添加正则项</li>
+<li>特征划分<ul>
+<li>Weighted Quantile Sketch（for approximate algorithm）</li>
+<li>Sparsity-aware Split Finding（run faster for sparse data）</li>
+</ul>
+</li>
+<li>并行加速</li>
+</ul>
+<h2 id="二阶泰勒展开"><a href="#二阶泰勒展开" class="headerlink" title="二阶泰勒展开"></a>二阶泰勒展开</h2><p>$$\hat{y}_i^{(0)} = 0 \<br>\hat{y}_i^{(1)} = f_1(x_i) = \hat{y}_i^{(0)} + f_1(x_i)\<br>\hat{y}_i^{(2)} = f_1(x_i) + f_2(x_i)= \hat{y}_i^{(1)} + f_2(x_i)\<br>\dots\<br>\hat{y}<em>i^{(t)} = \sum</em>{k=1}^t f_k(x_i)= \hat{y}_i^{(t-1)} + f_t(x_i)$$</p>
+<ul>
+<li>目标函数</li>
+</ul>
+<p>$$\text{obj}^{(t)}  = \sum_{i=1}^n l(y_i, \hat{y}<em>i^{(t)}) + \sum</em>{i=1}^t\Omega(f_i) \<br>           = \sum_{i=1}^n l(y_i, \hat{y}_i^{(t-1)} + f_t(x_i)) + \Omega(f_t) + \mathrm{constant}$$</p>
+<ul>
+<li>MSE损失函数</li>
+</ul>
+<p>$$\text{obj}^{(t)}  = \sum_{i=1}^n (y_i - (\hat{y}_i^{(t-1)} + f_t(x_i)))^2 + \sum_{i=1}^t\Omega(f_i) \<br>           = \sum_{i=1}^n [2(\hat{y}_i^{(t-1)} - y_i)f_t(x_i) + f_t(x_i)^2] + \Omega(f_t) + \mathrm{constant}$$<br>$$y_i - (\hat{y}_i^{(t-1)} + f_t(x_i))= r-f_t(x_i) \<br>r=y_i-\hat{y}^{t-1}$$</p>
+<p>$r$ 一般称为残差，也即是一阶导，负梯度</p>
+<p>使用其他损失函数无法得到这么规则的形式，考虑一般情况，对 obj 做二阶泰勒展开</p>
+<p>$$\text{obj}^{(t)} = \sum_{i=1}^n [l(y_i, \hat{y}_i^{(t-1)}) + g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i)] + \Omega(f_t) + \mathrm{constant}$$</p>
+<p>$g_i$, $h_i$ 分别为一阶导和二阶导</p>
+<p>$$g_i = \partial_{\hat{y}_i^{(t-1)}} l(y_i, \hat{y}_i^{(t-1)})\<br>h_i = \partial_{\hat{y}_i^{(t-1)}}^2 l(y_i, \hat{y}_i^{(t-1)})$$</p>
+<p>移去所有常数，在训练第 $t$ 轮时</p>
+<p>$$\sum_{i=1}^n [g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i)] + \Omega(f_t)$$<br>得到这个一般形式，只依赖于 $g_i$ 和 $h_i$，使得XGBoost可以使用定制的损失函数</p>
+<h2 id="正则项"><a href="#正则项" class="headerlink" title="正则项"></a>正则项</h2><ul>
+<li>树的定义</li>
+</ul>
+<p>$$f_t(x) = w_{q(x)}, w \in R^T, q:R^d\rightarrow {1,2,\cdots,T} $$</p>
+<p>w 是每个叶子的值组成的向量，q 是 x 到树叶子的映射函数，T 是叶子个数，所以模型复杂度定义如下</p>
+<p>$$\Omega(f) = \gamma T + \frac{1}{2}\lambda \sum_{j=1}^T w_j^2$$</p>
+<h2 id="Shrinkage-and-Column-Subsampling"><a href="#Shrinkage-and-Column-Subsampling" class="headerlink" title="Shrinkage and Column Subsampling"></a>Shrinkage and Column Subsampling</h2><p>除了添加正则化项，还使用两种额外的技术来进一步阻止overfitting。</p>
+<ul>
+<li>第一种技术是Friedman介绍的Shrinkage。Shrinkage会在每一步tree boosting时，会将新加入的weights通过一个因子η<br>进行缩放。与随机优化中的learning rate相类似，对于用于提升模型的新增树(future trees)，shrinkage可以减少每棵单独的树、以及叶子空间（leaves space）的影响。</li>
+<li>第二个技术是列特征子抽样(column feature subsampling)。该技术也会在RandomForest中使用，在商业软件TreeNet中的gradient boosting也有实现，但开源包中没实现。根据用户的反馈，比起传统的行子抽样（row sub-sampling：同样也支持），使用列子抽样可以阻止overfitting。列子抽样的使用可以加速并行算法的计算</li>
+</ul>
+<h2 id="Structure-score"><a href="#Structure-score" class="headerlink" title="Structure score"></a>Structure score</h2><p>$$\text{obj}^{(t)} \approx \sum_{i=1}^n [g_i w_{q(x_i)} + \frac{1}{2} h_i w_{q(x_i)}^2] + \gamma T + \frac{1}{2}\lambda \sum_{j=1}^T w_j^2\<br>= \sum^T_{j=1} [(\sum_{i\in I_j} g_i) w_j + \frac{1}{2} (\sum_{i\in I_j} h_i + \lambda) w_j^2 ] + \gamma T$$</p>
+<p>$I_j = {i|q(x_i)=j}$ 是分配到编号 $j$ 叶子的所有数据点的集合</p>
+<p>$$\text{obj}^{(t)} = \sum^T_{j=1} [G_jw_j + \frac{1}{2} (H_j+\lambda) w_j^2] +\gamma T$$</p>
+<p>$G_j = \sum_{i\in I_j} g_i$ 表示叶子编号为j的数据点的一阶导的和， $H_j = \sum_{i\in I_j} h_i$ 表示叶子编号为j的数据点的二阶导的和</p>
+<p> $wj$ 相互独立，$G_jw_j+\frac{1}{2}(H_j+\lambda)w_j^2$ 是个二次函数，我们可以直接求出最优点</p>
+<p>$$w_j^\ast = -\frac{G_j}{H_j+\lambda}\<br>\text{obj}^\ast = -\frac{1}{2} \sum_{j=1}^T \frac{G_j^2}{H_j+\lambda} + \gamma T$$</p>
+<p>通过计算obj可以衡量树结构的好坏，相比决策树更加精细（只考虑提升信息增益）</p>
+<p><img src="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/struct_score.png" alt="alt"></p>
+<h2 id="寻找最优划分点"><a href="#寻找最优划分点" class="headerlink" title="寻找最优划分点"></a>寻找最优划分点</h2><h3 id="Exact-Greedy-Algorithm（预先排序-枚举）"><a href="#Exact-Greedy-Algorithm（预先排序-枚举）" class="headerlink" title="Exact Greedy Algorithm（预先排序+枚举）"></a>Exact Greedy Algorithm（预先排序+枚举）</h3><p>我们虽然可以通过obj衡量一颗树的质量，但是暴力枚举依旧困难，先考虑叶子结点的划分</p>
+<p>$$Gain = \frac{1}{2} \left[\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{(G_L+G_R)^2}{H_L+H_R+\lambda}\right] - \gamma$$<br>该公式组成：</p>
+<ul>
+<li>划分左叶子的增益</li>
+<li>划分右叶子的增益</li>
+<li>父节点的增益</li>
+</ul>
+<p>可以看到如果划分增益小于 $\gamma$ ，那最好不要这个分支，这正是树剪枝的一个基本策略</p>
+<p>为了寻找最优化分点，首先把每个样本排序，如下图</p>
+<p><img src="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/split_find.png" alt="alt"></p>
+<p>进行一次扫描即可高效的得出最优划分点，该算法目前很多库支持入sciket-learn，R‘s gbm，single machine XGB。</p>
+<h3 id="Approximate-Algorithm"><a href="#Approximate-Algorithm" class="headerlink" title="Approximate Algorithm"></a>Approximate Algorithm</h3><p>数据可能没有办法全部载入内存，无法使用上述贪心策略。该算法会首先根据特征分布的百分位数(percentiles of feature distribution)，提出候选划分点(candidate splitting points)。接着，该算法将连续型特征映射到由这些候选点划分的分桶(buckets)中，聚合统计信息，基于该聚合统计找到在建议（proposal）间的最优解。</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-27-21-05-02.png" alt=""></p>
+<ul>
+<li>寻找 $S_k$</li>
+</ul>
+<p>$D_k={(x_{1k},h_1),(x_{2k},h_2)···(x_{nk},h_n)}$ 表示样本第 k 个特征值和二阶导</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-27-21-15-30.png" alt=""></p>
+<p>表示第 k 个特征值小于 z的样本比例，通过下式寻找 $D_k$, $\epsilon$ 是近似因子，可以理解为分为 $1/\epsilon$ 个划分点</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-27-21-17-08.png" alt=""></p>
+<ul>
+<li>global or local</li>
+</ul>
+<p>该算法有两个变种，取决于给定的建议（proposal）。全局变种（global variant）会在树构建的初始阶段，建议所有的候选划分，并在所有的层级（level）上使用相同的建议。局部变种（local variant）则在每次划分后重新建议（re-proposes）。比起局部法，全局法需要更少的建议步骤。然而，对于全局建议，通常需要更多的候选点，因为在每次划分之后，不需要重新定义候选。局部建议会在每次划分后重新定义候选，对于更深的树更合适。图3展示了在Higgs boson数据集上不同算法的比较。我们发现，局部建议确实需要更少的候选。如果两者的候选一样多，全局建议比局部建议会更精确。</p>
+<h3 id="Weighted-Quantile-Sketch"><a href="#Weighted-Quantile-Sketch" class="headerlink" title="Weighted Quantile Sketch"></a>Weighted Quantile Sketch</h3><p>$h_i$ 表示每个数据点的权重，可以从下式看出</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-27-21-26-38.png" alt=""><br>$g_i/h_i$ 作为label，$h_i$ 为平方损失的权重</p>
+<h3 id="Sparsity-aware-Split-Finding"><a href="#Sparsity-aware-Split-Finding" class="headerlink" title="Sparsity-aware Split Finding"></a>Sparsity-aware Split Finding</h3><p>有些数据集本身或者由于特征工程（one-hot）导致特征非常稀疏。XGBoost提出一种针对稀疏特征的统一处理方式，同时计算开销减小（只计算非空条目）</p>
+<p><img src="/2018/09/01/GBDT/image/2018-09-27-21-37-51.png" alt=""></p>
+<ul>
+<li>只计算非空值</li>
+<li>分别处理将missing该特征值的样本分配到左叶子结点和右叶子结点的两种情形，分到那个子节点带来的增益大，默认的方向就是哪个子节点 </li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/01/YOLO论文笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tauriel">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tauriel' Story">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/01/YOLO论文笔记/" itemprop="url">
                   YOLO论文笔记
                 </a>
               
@@ -382,9 +935,25 @@
                 
               
 
-              <time title="Created: 2018-09-28 21:49:00" itemprop="dateCreated datePublished" datetime="2018-09-28T21:49:00+08:00">2018-09-28</time>
+              <time title="Created: 2018-09-01 08:00:00" itemprop="dateCreated datePublished" datetime="2018-09-01T08:00:00+08:00">2018-09-01</time>
             
 
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-28 22:36:40" itemprop="dateModified" datetime="2018-09-28T22:36:40+08:00">2018-09-28</time>
+              
             
           </span>
 
@@ -432,7 +1001,7 @@
 </blockquote>
 </li>
 </ul>
-<div align="center"><br>    <img src="../image/2018-05-20-20-16-57.png" width="500" height="150" alt="rcnnvsyolo" style=""><br></div>
+<div align="center"><br>    <img src="/2018/09/01/YOLO论文笔记/image/2018-05-20-20-16-57.png" width="500" height="150" alt="rcnnvsyolo" style=""><br></div>
 
 <caption><br>    <center><br>        <u><br>            <font color="coral" size="4" face="黑体"><br>                RCNN vs YOLO<br>            </font><br>        </u><br>    </center><br></caption>
 
@@ -531,7 +1100,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/NN-technique/">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/01/NN-technique/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tauriel">
@@ -550,7 +1119,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/28/NN-technique/" itemprop="url">
+                <a class="post-title-link" href="/2018/09/01/NN-technique/" itemprop="url">
                   NN-technique
                 </a>
               
@@ -577,9 +1146,25 @@
                 
               
 
-              <time title="Created: 2018-09-28 21:48:52" itemprop="dateCreated datePublished" datetime="2018-09-28T21:48:52+08:00">2018-09-28</time>
+              <time title="Created: 2018-09-01 08:00:00" itemprop="dateCreated datePublished" datetime="2018-09-01T08:00:00+08:00">2018-09-01</time>
             
 
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-28 22:36:30" itemprop="dateModified" datetime="2018-09-28T22:36:30+08:00">2018-09-28</time>
+              
             
           </span>
 
@@ -675,7 +1260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/CNN总结/">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/01/tips/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tauriel">
@@ -694,472 +1279,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/28/CNN总结/" itemprop="url">
-                  CNN总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-28 21:47:42" itemprop="dateCreated datePublished" datetime="2018-09-28T21:47:42+08:00">2018-09-28</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/GBDT/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tauriel">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tauriel' Story">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/28/GBDT/" itemprop="url">
-                  GBDT
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-28 00:00:00 / Modified: 22:07:06" itemprop="dateCreated datePublished" datetime="2018-09-28T00:00:00+08:00">2018-09-28</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Regression-Tree-and-Ensemble"><a href="#Regression-Tree-and-Ensemble" class="headerlink" title="Regression Tree and Ensemble"></a>Regression Tree and Ensemble</h1><blockquote>
-<p>The tree ensemble model consists of a set of classification and regression trees (CART). </p>
-<ul>
-<li>CART</li>
-</ul>
-</blockquote>
-<p>We classify the members of a family into different leaves, and assign them the score on the corresponding leaf. A CART is a bit different from decision trees, in which the leaf only contains decision values.</p>
-<p><img src="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/cart.png" alt="alt"></p>
-<blockquote>
-<p>regression tree is a function that maps the attributes to the score</p>
-</blockquote>
-<ul>
-<li>Regression Tree Ensemble</li>
-</ul>
-<p>Usually, a single tree is not strong enough to be used in practice. What is actually used is the ensemble model, which sums the prediction of multiple trees together.</p>
-<p><img src="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/twocart.png" alt="alt"></p>
-<p>Mathematically, we can write our model in the form.where $K$<br> is the number of trees, $f$ is a function in the functional space $\mathcal{F}$, and $\mathcal{F}$ is the set of all possible CARTs. </p>
-<p>$$\hat{y}<em>i = \sum</em>{k=1}^K f_k(x_i), f_k \in \mathcal{F}$$</p>
-<ul>
-<li><p>How can we learn functions?</p>
-<ul>
-<li><p>I want to predict whether I like romantic music at time t</p>
-<p><img src="../image/2018-09-26-14-59-26.png" alt=""></p>
-</li>
-<li><p>Things we need to learn</p>
-<p><img src="../image/2018-09-26-15-00-37.png" alt=""></p>
-</li>
-<li><p>Objective for single variable regression tree(step functions)</p>
-<ul>
-<li>Training Loss: How will the function fit on the points?</li>
-<li>Regularization: How do we define complexity of the function?<ul>
-<li>Number of splitting points, l2 norm of the height in each segment?</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>Define objective (loss, regularization), and optimize it!!</li>
-</ul>
-<p>The objective function to be optimized is given by</p>
-<p>$$\text{obj}(\theta) = \sum_i^n l(y_i, \hat{y}<em>i) + \sum</em>{k=1}^K \Omega(f_k)$$<br>where $L$<br>is the training loss function, and $Ω$<br>is the regularization term.</p>
-</li>
-<li><p>Bias-variance tradeoff</p>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="../image/2018-09-26-15-03-04.png" alt=""></p>
-<blockquote>
-<p>Regression tree ensemble defines how you make the prediction score, it can be used for Classification, Regression, Ranking….It all depends on how you define the objective function!</p>
-</blockquote>
-<h1 id="Boosting-Tree"><a href="#Boosting-Tree" class="headerlink" title="Boosting Tree"></a>Boosting Tree</h1><ul>
-<li>Boosting</li>
-</ul>
-<blockquote>
-<p>Boosting 是一族可将弱学习器提升为强学习器的算法。先从初始训练集训练出一个基学习器，然后根据基学习器的表现对训练样本分布进行调整，使得先前基学习器做错的训练样本受到更多的关注，然后基于调整后的样本分布来训练下一个基学习器，如此重复，直至基学习器数目达到指定值T，最终将这T个基学习器进行加权结合。</p>
-<ul>
-<li>AdaBoost (Adaptive Boosting)</li>
-</ul>
-</blockquote>
-<p>基学习器的线性组合（additive model）</p>
-<p>$$H(x)=\sum_{t=1}^T \alpha_th_t(x)$$</p>
-<p>来最小化指数损失函数（exponential loss function）</p>
-<p>$$\ell_{exp}(H\rvert D)=\mathbb{E}_{x\thicksim\mathcal{D}}[e^{-f(x)H(x)}]$$</p>
-<p>算法流程如下</p>
-<p><img src="../image/2018-09-26-19-53-44.png" alt=""></p>
-<ul>
-<li><p>AdaBoost算法解释</p>
-<blockquote>
-<p>AdaBoost算法是模型为加法模型、损失函数为指数函数、学习算法为向前分步算法时的二分类学习方法</p>
-</blockquote>
-<ul>
-<li><p>加法模型（additive model）</p>
-<p>$$f(x)=\sum_{m=1}^M\beta_mb(x;\gamma_m)$$<br>其中，$b(x;\gamma_m)$为基函数，$\gamma_m$为基函数的参数，$\beta_m$为基函数的系数，显然AdaBoost最终分类器线性组合 $f(x)=\sum_{m=1}^M\alpha_mG_m(x)$ 是一个加法模型。</p>
-</li>
-<li><p>向前分步加法模型</p>
-<p><img src="../image/2018-09-26-20-47-53.png" alt=""></p>
-</li>
-<li>问题的分解<br><img src="../image/2018-09-26-21-07-17.png" alt=""><br><img src="../image/2018-09-26-21-07-57.png" alt=""><br>前向分步算法将同时求解从 $m$=1 到 $M$ 所有参数的优化问题，简化为逐次求解各个参数的优化问题。</li>
-</ul>
-</li>
-<li><p>AdaBoost算法推导</p>
-<ul>
-<li><p>使用指数损失函数</p>
-<p><img src="../image/2018-09-26-21-12-56.png" alt=""></p>
-</li>
-<li><p>前向分步算法</p>
-<p>$$f(x_i)=f_{m-1}(x_i)+\beta_mG(x_i)$$<br>带入loss function</p>
-<p><img src="../image/2018-09-26-21-17-06.png" alt=""></p>
-<p>$$w_i^{(m)}=exp(-y_if_{m-1}(x_i))$$</p>
-<p><img src="../image/2018-09-26-21-19-29.png" alt=""></p>
-<p>$w_i^{(m)}$ 跟 $\beta$ 和 $G$都不相关，可以看作迭代中添加的一个系数，和 $f_{m-1}(x_i)$ 相关，所以该系数随着迭代会改变</p>
-<p>现证明上式中达到最小 $\beta^<em>_m G^</em>_m$ 的就是AdaBoost算法中的$\beta_m G_m$，当 $\beta&gt;0$</p>
-<p><img src="../image/2018-09-26-21-32-21.png" alt=""><br>此分类器是使 $m$ 轮加权训练数据分类误差率最小的基本分类器</p>
-<p><img src="../image/2018-09-26-21-38-46.png" alt=""><br><img src="../image/2018-09-26-21-38-55.png" alt=""></p>
-<p>将求得的 $G^*_m(x)$ 代入上式，对 $\beta$ 求导并使倒数为0，即可得到最小的 $\beta$</p>
-<p><img src="../image/2018-09-26-21-41-07.png" alt=""></p>
-<p>$err_m$是分类误差率</p>
-<p><img src="../image/2018-09-26-21-41-39.png" alt=""></p>
-<p>再看权值更新</p>
-<p><img src="../image/2018-09-26-21-45-26.png" alt=""></p>
-<p>可以看出与AdaBoost各步骤等价</p>
-</li>
-</ul>
-</li>
-<li><p>Boosting Tree 总结</p>
-<blockquote>
-<p>提升树实际采用加法模型与前向分步算法，以决策树为基函数的提升方法。对分类问题决策树是二叉分类树，对回归问题是二叉回归树</p>
-</blockquote>
-</li>
-</ul>
-<p><img src="../image/2018-09-27-10-35-45.png" alt=""></p>
-<h1 id="Gradient-Boosting-Decision-Tree（MART）"><a href="#Gradient-Boosting-Decision-Tree（MART）" class="headerlink" title="Gradient Boosting Decision Tree（MART）"></a>Gradient Boosting Decision Tree（MART）</h1><blockquote>
-<p>AdaBoost通过提高错分数据点的权重来改进模型，而梯度提升树通过计算负梯度来改进模型。回归问题的提升树通过拟合残差学习回归树，这个残差是采用Squared error损失函数的负梯度，是梯度提升树的一种情况。</p>
-</blockquote>
-<p><img src="../image/2018-09-27-10-28-18.png" alt=""></p>
-<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><ul>
-<li>二阶泰勒展开+添加正则项</li>
-<li>特征划分<ul>
-<li>Weighted Quantile Sketch（for approximate algorithm）</li>
-<li>Sparsity-aware Split Finding（run faster for sparse data）</li>
-</ul>
-</li>
-<li>并行加速</li>
-</ul>
-<h2 id="二阶泰勒展开"><a href="#二阶泰勒展开" class="headerlink" title="二阶泰勒展开"></a>二阶泰勒展开</h2><p>$$\hat{y}_i^{(0)} = 0 \<br>\hat{y}_i^{(1)} = f_1(x_i) = \hat{y}_i^{(0)} + f_1(x_i)\<br>\hat{y}_i^{(2)} = f_1(x_i) + f_2(x_i)= \hat{y}_i^{(1)} + f_2(x_i)\<br>\dots\<br>\hat{y}<em>i^{(t)} = \sum</em>{k=1}^t f_k(x_i)= \hat{y}_i^{(t-1)} + f_t(x_i)$$</p>
-<ul>
-<li>目标函数</li>
-</ul>
-<p>$$\text{obj}^{(t)}  = \sum_{i=1}^n l(y_i, \hat{y}<em>i^{(t)}) + \sum</em>{i=1}^t\Omega(f_i) \<br>           = \sum_{i=1}^n l(y_i, \hat{y}_i^{(t-1)} + f_t(x_i)) + \Omega(f_t) + \mathrm{constant}$$</p>
-<ul>
-<li>MSE损失函数</li>
-</ul>
-<p>$$\text{obj}^{(t)}  = \sum_{i=1}^n (y_i - (\hat{y}_i^{(t-1)} + f_t(x_i)))^2 + \sum_{i=1}^t\Omega(f_i) \<br>           = \sum_{i=1}^n [2(\hat{y}_i^{(t-1)} - y_i)f_t(x_i) + f_t(x_i)^2] + \Omega(f_t) + \mathrm{constant}$$<br>$$y_i - (\hat{y}_i^{(t-1)} + f_t(x_i))= r-f_t(x_i) \<br>r=y_i-\hat{y}^{t-1}$$</p>
-<p>$r$ 一般称为残差，也即是一阶导，负梯度</p>
-<p>使用其他损失函数无法得到这么规则的形式，考虑一般情况，对 obj 做二阶泰勒展开</p>
-<p>$$\text{obj}^{(t)} = \sum_{i=1}^n [l(y_i, \hat{y}_i^{(t-1)}) + g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i)] + \Omega(f_t) + \mathrm{constant}$$</p>
-<p>$g_i$, $h_i$ 分别为一阶导和二阶导</p>
-<p>$$g_i = \partial_{\hat{y}_i^{(t-1)}} l(y_i, \hat{y}_i^{(t-1)})\<br>h_i = \partial_{\hat{y}_i^{(t-1)}}^2 l(y_i, \hat{y}_i^{(t-1)})$$</p>
-<p>移去所有常数，在训练第 $t$ 轮时</p>
-<p>$$\sum_{i=1}^n [g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i)] + \Omega(f_t)$$<br>得到这个一般形式，只依赖于 $g_i$ 和 $h_i$，使得XGBoost可以使用定制的损失函数</p>
-<h2 id="正则项"><a href="#正则项" class="headerlink" title="正则项"></a>正则项</h2><ul>
-<li>树的定义</li>
-</ul>
-<p>$$f_t(x) = w_{q(x)}, w \in R^T, q:R^d\rightarrow {1,2,\cdots,T} $$</p>
-<p>w 是每个叶子的值组成的向量，q 是 x 到树叶子的映射函数，T 是叶子个数，所以模型复杂度定义如下</p>
-<p>$$\Omega(f) = \gamma T + \frac{1}{2}\lambda \sum_{j=1}^T w_j^2$$</p>
-<h2 id="Shrinkage-and-Column-Subsampling"><a href="#Shrinkage-and-Column-Subsampling" class="headerlink" title="Shrinkage and Column Subsampling"></a>Shrinkage and Column Subsampling</h2><p>除了添加正则化项，还使用两种额外的技术来进一步阻止overfitting。</p>
-<ul>
-<li>第一种技术是Friedman介绍的Shrinkage。Shrinkage会在每一步tree boosting时，会将新加入的weights通过一个因子η<br>进行缩放。与随机优化中的learning rate相类似，对于用于提升模型的新增树(future trees)，shrinkage可以减少每棵单独的树、以及叶子空间（leaves space）的影响。</li>
-<li>第二个技术是列特征子抽样(column feature subsampling)。该技术也会在RandomForest中使用，在商业软件TreeNet中的gradient boosting也有实现，但开源包中没实现。根据用户的反馈，比起传统的行子抽样（row sub-sampling：同样也支持），使用列子抽样可以阻止overfitting。列子抽样的使用可以加速并行算法的计算</li>
-</ul>
-<h2 id="Structure-score"><a href="#Structure-score" class="headerlink" title="Structure score"></a>Structure score</h2><p>$$\text{obj}^{(t)} \approx \sum_{i=1}^n [g_i w_{q(x_i)} + \frac{1}{2} h_i w_{q(x_i)}^2] + \gamma T + \frac{1}{2}\lambda \sum_{j=1}^T w_j^2\<br>= \sum^T_{j=1} [(\sum_{i\in I_j} g_i) w_j + \frac{1}{2} (\sum_{i\in I_j} h_i + \lambda) w_j^2 ] + \gamma T$$</p>
-<p>$I_j = {i|q(x_i)=j}$ 是分配到编号 $j$ 叶子的所有数据点的集合</p>
-<p>$$\text{obj}^{(t)} = \sum^T_{j=1} [G_jw_j + \frac{1}{2} (H_j+\lambda) w_j^2] +\gamma T$$</p>
-<p>$G_j = \sum_{i\in I_j} g_i$ 表示叶子编号为j的数据点的一阶导的和， $H_j = \sum_{i\in I_j} h_i$ 表示叶子编号为j的数据点的二阶导的和</p>
-<p> $wj$ 相互独立，$G_jw_j+\frac{1}{2}(H_j+\lambda)w_j^2$ 是个二次函数，我们可以直接求出最优点</p>
-<p>$$w_j^\ast = -\frac{G_j}{H_j+\lambda}\<br>\text{obj}^\ast = -\frac{1}{2} \sum_{j=1}^T \frac{G_j^2}{H_j+\lambda} + \gamma T$$</p>
-<p>通过计算obj可以衡量树结构的好坏，相比决策树更加精细（只考虑提升信息增益）</p>
-<p><img src="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/struct_score.png" alt="alt"></p>
-<h2 id="寻找最优划分点"><a href="#寻找最优划分点" class="headerlink" title="寻找最优划分点"></a>寻找最优划分点</h2><h3 id="Exact-Greedy-Algorithm（预先排序-枚举）"><a href="#Exact-Greedy-Algorithm（预先排序-枚举）" class="headerlink" title="Exact Greedy Algorithm（预先排序+枚举）"></a>Exact Greedy Algorithm（预先排序+枚举）</h3><p>我们虽然可以通过obj衡量一颗树的质量，但是暴力枚举依旧困难，先考虑叶子结点的划分</p>
-<p>$$Gain = \frac{1}{2} \left[\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{(G_L+G_R)^2}{H_L+H_R+\lambda}\right] - \gamma$$<br>该公式组成：</p>
-<ul>
-<li>划分左叶子的增益</li>
-<li>划分右叶子的增益</li>
-<li>父节点的增益</li>
-</ul>
-<p>可以看到如果划分增益小于 $\gamma$ ，那最好不要这个分支，这正是树剪枝的一个基本策略</p>
-<p>为了寻找最优化分点，首先把每个样本排序，如下图</p>
-<p><img src="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/split_find.png" alt="alt"></p>
-<p>进行一次扫描即可高效的得出最优划分点，该算法目前很多库支持入sciket-learn，R‘s gbm，single machine XGB。</p>
-<h3 id="Approximate-Algorithm"><a href="#Approximate-Algorithm" class="headerlink" title="Approximate Algorithm"></a>Approximate Algorithm</h3><p>数据可能没有办法全部载入内存，无法使用上述贪心策略。该算法会首先根据特征分布的百分位数(percentiles of feature distribution)，提出候选划分点(candidate splitting points)。接着，该算法将连续型特征映射到由这些候选点划分的分桶(buckets)中，聚合统计信息，基于该聚合统计找到在建议（proposal）间的最优解。</p>
-<p><img src="../image/2018-09-27-21-05-02.png" alt=""></p>
-<ul>
-<li>寻找 $S_k$</li>
-</ul>
-<p>$D_k={(x_{1k},h_1),(x_{2k},h_2)···(x_{nk},h_n)}$ 表示样本第 k 个特征值和二阶导</p>
-<p><img src="../image/2018-09-27-21-15-30.png" alt=""></p>
-<p>表示第 k 个特征值小于 z的样本比例，通过下式寻找 $D_k$, $\epsilon$ 是近似因子，可以理解为分为 $1/\epsilon$ 个划分点</p>
-<p><img src="../image/2018-09-27-21-17-08.png" alt=""></p>
-<ul>
-<li>global or local</li>
-</ul>
-<p>该算法有两个变种，取决于给定的建议（proposal）。全局变种（global variant）会在树构建的初始阶段，建议所有的候选划分，并在所有的层级（level）上使用相同的建议。局部变种（local variant）则在每次划分后重新建议（re-proposes）。比起局部法，全局法需要更少的建议步骤。然而，对于全局建议，通常需要更多的候选点，因为在每次划分之后，不需要重新定义候选。局部建议会在每次划分后重新定义候选，对于更深的树更合适。图3展示了在Higgs boson数据集上不同算法的比较。我们发现，局部建议确实需要更少的候选。如果两者的候选一样多，全局建议比局部建议会更精确。</p>
-<h3 id="Weighted-Quantile-Sketch"><a href="#Weighted-Quantile-Sketch" class="headerlink" title="Weighted Quantile Sketch"></a>Weighted Quantile Sketch</h3><p>$h_i$ 表示每个数据点的权重，可以从下式看出</p>
-<p><img src="../image/2018-09-27-21-26-38.png" alt=""><br>$g_i/h_i$ 作为label，$h_i$ 为平方损失的权重</p>
-<h3 id="Sparsity-aware-Split-Finding"><a href="#Sparsity-aware-Split-Finding" class="headerlink" title="Sparsity-aware Split Finding"></a>Sparsity-aware Split Finding</h3><p>有些数据集本身或者由于特征工程（one-hot）导致特征非常稀疏。XGBoost提出一种针对稀疏特征的统一处理方式，同时计算开销减小（只计算非空条目）</p>
-<p><img src="../image/2018-09-27-21-37-51.png" alt=""></p>
-<ul>
-<li>只计算非空值</li>
-<li>分别处理将missing该特征值的样本分配到左叶子结点和右叶子结点的两种情形，分到那个子节点带来的增益大，默认的方向就是哪个子节点 </li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/tips/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="tauriel">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Tauriel' Story">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/28/tips/" itemprop="url">
+                <a class="post-title-link" href="/2018/09/01/tips/" itemprop="url">
                   Tips
                 </a>
               
@@ -1186,12 +1306,24 @@
                 
               
 
-              <time title="Created: 2018-09-28 00:00:00 / Modified: 22:07:54" itemprop="dateCreated datePublished" datetime="2018-09-28T00:00:00+08:00">2018-09-28</time>
+              <time title="Created: 2018-09-01 08:00:00" itemprop="dateCreated datePublished" datetime="2018-09-01T08:00:00+08:00">2018-09-01</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-28 22:36:35" itemprop="dateModified" datetime="2018-09-28T22:36:35+08:00">2018-09-28</time>
               
             
           </span>
@@ -1442,7 +1574,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/特征工程/">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/01/特征工程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="tauriel">
@@ -1461,7 +1593,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/28/特征工程/" itemprop="url">
+                <a class="post-title-link" href="/2018/09/01/特征工程/" itemprop="url">
                   特征工程
                 </a>
               
@@ -1488,12 +1620,24 @@
                 
               
 
-              <time title="Created: 2018-09-28 00:00:00 / Modified: 22:07:36" itemprop="dateCreated datePublished" datetime="2018-09-28T00:00:00+08:00">2018-09-28</time>
+              <time title="Created: 2018-09-01 08:00:00" itemprop="dateCreated datePublished" datetime="2018-09-01T08:00:00+08:00">2018-09-01</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-28 22:36:47" itemprop="dateModified" datetime="2018-09-28T22:36:47+08:00">2018-09-28</time>
               
             
           </span>
@@ -1935,7 +2079,7 @@
 </blockquote>
 <p>这时候macvim安装在<code>/usr/local/Cellar/macvim</code>下，使用<code>mvim</code>即可调用</p>
 <h2 id="设置alias"><a href="#设置alias" class="headerlink" title="设置alias"></a>设置alias</h2><p>通过<code>alias</code>命令，继续使用vim命令，但是调用的是macvi`m<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装了zsh，环境变量设置在~/.zshrc中</span></span><br><span class="line"><span class="comment"># 使用bash的话，修改~/.bashrc</span></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># 行末添加</span></span><br><span class="line"><span class="built_in">alias</span> vim=<span class="string">'mvim -v'</span></span><br></pre></td></tr></table></figure></p>
-<p>这时候再查看，系统已经支持+clipboard<br><img src="../image/2018-05-15-19-53-06.png" alt=""><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改vim配置文件~/.vimrc</span></span><br><span class="line">vim ~/.vimrc</span><br><span class="line"><span class="comment"># 添加下行，使用系统剪切板</span></span><br><span class="line"><span class="built_in">set</span> clipboard=unname</span><br></pre></td></tr></table></figure></p>
+<p>这时候再查看，系统已经支持+clipboard<br><img src="/2018/05/15/mac配置vim（high-sierra/image/2018-05-15-19-53-06.png" alt=""><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改vim配置文件~/.vimrc</span></span><br><span class="line">vim ~/.vimrc</span><br><span class="line"><span class="comment"># 添加下行，使用系统剪切板</span></span><br><span class="line"><span class="built_in">set</span> clipboard=unname</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>还有一个问题，就是在<code>tmux</code>下使用<code>vim</code>依旧无法使用系统寄存器，无法跨文件拷贝，报错和上面相同。我使用<code>ubuntu</code>也遇到这个问题，还<font color="red"><strong>未解决</strong></font>。<code>macOS</code>解决方法如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install reattach-to-user-namespace</span><br><span class="line"><span class="comment"># 添加到~/.tmux.conf</span></span><br><span class="line"><span class="built_in">set</span>-option -g default-command <span class="string">"reattach-to-user-namespace -l zsh"</span></span><br></pre></td></tr></table></figure></p>
 </blockquote>
@@ -1951,7 +2095,7 @@
 <h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Vundle放到~/.vim/bundle文件夹</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim</span><br></pre></td></tr></table></figure>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开vim</span></span><br><span class="line">$  vim</span><br><span class="line"><span class="comment"># 进入vim命令行模式，`esc`</span></span><br><span class="line">:PluginInstall</span><br></pre></td></tr></table></figure>
 <p><em>这时候会开始安装一系列插件，过程<strong>巨慢</strong>， 之前也搜到有其他的管理vim插件的软件，效率比Vundle要高，有兴趣可以尝试</em></p>
-<p><em>安装完可能会有部分插件安装失败</em><br><img src="../image/2018-05-15-20-07-29.png" alt=""></p>
+<p><em>安装完可能会有部分插件安装失败</em><br><img src="/2018/05/15/mac配置vim（high-sierra/image/2018-05-15-20-07-29.png" alt=""></p>
 <p>*这时候可以输入<code>L</code>查看日志情况，根据错误信息去解决，把最新的插件放到<code>~/.vim/bundle</code>文件夹</p>
 
           
