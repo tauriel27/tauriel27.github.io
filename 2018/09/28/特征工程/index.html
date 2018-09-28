@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="baidu-site-verification" content="vjgZxMRwYY" />
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="异常值 基于距离度量的方法，对异常值很敏感  可视化分析 直方图 散点图 箱型图 Q-Q图  3 $\sigma$原则如果数据服从正态分布，距离均值3倍标准差的值认为是异常值 箱型图分析箱型图提供了识别异常值的一个标准：如果一个值小于QL01.5IQR或大于OU-1.5IQR的值，则被称为异常值。QL为下四分位数，表示全部观察值中有四分之一的数据取值比它小；QU为上四分位数，表示全部观察值中有四分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tauriel&#39; Story">
+<meta property="og:url" content="http://tauriel27.github.io/2018/09/28/特征工程/index.html">
+<meta property="og:site_name" content="Tauriel&#39; Story">
+<meta property="og:description" content="异常值 基于距离度量的方法，对异常值很敏感  可视化分析 直方图 散点图 箱型图 Q-Q图  3 $\sigma$原则如果数据服从正态分布，距离均值3倍标准差的值认为是异常值 箱型图分析箱型图提供了识别异常值的一个标准：如果一个值小于QL01.5IQR或大于OU-1.5IQR的值，则被称为异常值。QL为下四分位数，表示全部观察值中有四分之一的数据取值比它小；QU为上四分位数，表示全部观察值中有四分">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-28T13:53:59.307Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tauriel&#39; Story">
+<meta name="twitter:description" content="异常值 基于距离度量的方法，对异常值很敏感  可视化分析 直方图 散点图 箱型图 Q-Q图  3 $\sigma$原则如果数据服从正态分布，距离均值3倍标准差的值认为是异常值 箱型图分析箱型图提供了识别异常值的一个标准：如果一个值小于QL01.5IQR或大于OU-1.5IQR的值，则被称为异常值。QL为下四分位数，表示全部观察值中有四分之一的数据取值比它小；QU为上四分位数，表示全部观察值中有四分">
+
+
+
+
+
+
+  <link rel="canonical" href="http://tauriel27.github.io/2018/09/28/特征工程/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | Tauriel' Story</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tauriel' Story</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/特征工程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tauriel">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tauriel' Story">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-28 21:49:16 / Modified: 21:53:59" itemprop="dateCreated datePublished" datetime="2018-09-28T21:49:16+08:00">2018-09-28</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="异常值"><a href="#异常值" class="headerlink" title="异常值"></a>异常值</h1><blockquote>
+<p>基于距离度量的方法，对异常值很敏感</p>
+</blockquote>
+<h2 id="可视化分析"><a href="#可视化分析" class="headerlink" title="可视化分析"></a>可视化分析</h2><ul>
+<li>直方图</li>
+<li>散点图</li>
+<li>箱型图</li>
+<li>Q-Q图</li>
+</ul>
+<h2 id="3-sigma-原则"><a href="#3-sigma-原则" class="headerlink" title="3 $\sigma$原则"></a>3 $\sigma$原则</h2><p>如果数据服从正态分布，距离均值3倍标准差的值认为是异常值</p>
+<h2 id="箱型图分析"><a href="#箱型图分析" class="headerlink" title="箱型图分析"></a>箱型图分析</h2><p>箱型图提供了识别异常值的一个标准：如果一个值小于QL01.5IQR或大于OU-1.5IQR的值，则被称为异常值。QL为下四分位数，表示全部观察值中有四分之一的数据取值比它小；QU为上四分位数，表示全部观察值中有四分之一的数据取值比它大；IQR为四分位数间距，是上四分位数QU与下四分位数QL的差值，包含了全部观察值的一半。箱型图判断异常值的方法以四分位数和四分位距为基础，四分位数具有鲁棒性：25%的数据可以变得任意远并且不会干扰四分位数，所以异常值不能对这个标准施加影响。因此箱型图识别异常值比较客观，在识别异常值时有一定的优越性。</p>
+<h2 id="基于距离"><a href="#基于距离" class="headerlink" title="基于距离"></a>基于距离</h2><p>通常可以在对象之间定义邻近性度量，异常对象是那些远离其他对象的对象<br>优缺点：1.简单；2.缺点：基于邻近度的方法需要O(m2)时间，大数据集不适用；3.该方法对参数的选择也是敏感的；4.不能处理具有不同密度区域的数据集，因为它使用全局阈值，不能考虑这种密度的变化。</p>
+<h2 id="基于模型检测"><a href="#基于模型检测" class="headerlink" title="基于模型检测"></a>基于模型检测</h2><p>首先建立一个数据模型，异常是那些同模型不能完美拟合的对象；如果模型是簇的集合，则异常是不显著属于任何簇的对象；在使用回归模型时，异常是相对远离预测值的对象<br>优缺点：1.有坚实的统计学理论基础，当存在充分的数据和所用的检验类型的知识时，这些检验可能非常有效；2.对于多元数据，可用的选择少一些，并且对于高维数据，这些检测可能性很差。</p>
+<h2 id="基于密度"><a href="#基于密度" class="headerlink" title="基于密度"></a>基于密度</h2><p>当一个点的局部密度显著低于它的大部分近邻时才将其分类为离群点。适合非均匀分布的数据。<br>优缺点：1.给出了对象是离群点的定量度量，并且即使数据具有不同的区域也能够很好的处理；2.与基于距离的方法一样，这些方法必然具有O(m2)的时间复杂度。对于低维数据使用特定的数据结构可以达到O(mlogm)；3.参数选择困难。虽然算法通过观察不同的k值，取得最大离群点得分来处理该问题，但是，仍然需要选择这些值的上下界。</p>
+<h2 id="基于聚类"><a href="#基于聚类" class="headerlink" title="基于聚类"></a>基于聚类</h2><p>基于聚类的离群点：一个对象是基于聚类的离群点，如果该对象不强属于任何簇。离群点对初始聚类的影响：如果通过聚类检测离群点，则由于离群点影响聚类，存在一个问题：结构是否有效。为了处理该问题，可以使用如下方法：对象聚类，删除离群点，对象再次聚类（这个不能保证产生最优结果）。<br>优缺点：1.基于线性和接近线性复杂度（k均值）的聚类技术来发现离群点可能是高度有效的；2.簇的定义通常是离群点的补，因此可能同时发现簇和离群点；3.产生的离群点集和它们的得分可能非常依赖所用的簇的个数和数据中离群点的存在性；4.聚类算法产生的簇的质量对该算法产生的离群点的质量影响非常大。</p>
+<h2 id="如何处理"><a href="#如何处理" class="headerlink" title="如何处理"></a>如何处理</h2><p>根据错误类型，人为错误进行修改，自然错误需特别处理</p>
+<ul>
+<li>删除</li>
+<li>变换</li>
+<li>基于统计量修改</li>
+</ul>
+<h1 id="缺失值"><a href="#缺失值" class="headerlink" title="缺失值"></a>缺失值</h1><h2 id="删除特征"><a href="#删除特征" class="headerlink" title="删除特征"></a>删除特征</h2><p>根据特征重要性，重要性较低的，缺失率较高的删除</p>
+<h2 id="统计量填充"><a href="#统计量填充" class="headerlink" title="统计量填充"></a>统计量填充</h2><p>中位数（非均匀分布），均值（均匀分布）</p>
+<h2 id="插值"><a href="#插值" class="headerlink" title="插值"></a>插值</h2><ul>
+<li>随机插补法</li>
+</ul>
+<p>随机选取样本填充</p>
+<ul>
+<li>多重插补法</li>
+</ul>
+<p>通过变量关系对确实数据预测</p>
+<ul>
+<li>热平台插补</li>
+</ul>
+<p>在非缺失样本中找到与缺失样本相似对样本，填充</p>
+<ul>
+<li>拉格朗日插值、牛顿插值<h2 id="模型预测"><a href="#模型预测" class="headerlink" title="模型预测"></a>模型预测</h2>使用该列特征已有条目训练模型，预测空条目<h2 id="特殊处理"><a href="#特殊处理" class="headerlink" title="特殊处理"></a>特殊处理</h2>对于重要性特别高的特征，另行处理</li>
+</ul>
+<h1 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h1><blockquote>
+<p>code</p>
+</blockquote>
+<h1 id="噪声"><a href="#噪声" class="headerlink" title="噪声"></a>噪声</h1><blockquote>
+<p>噪音，是被测量变量的随机误差或方差。我们在上文中提到过异常点（离群点），那么离群点和噪音是不是一回事呢？我们知道，观测量(Measurement) = 真实数据(True Data) + 噪声 (Noise)。离群点(Outlier)属于观测量，既有可能是真实数据产生的，也有可能是噪声带来的，但是总的来说是和大部分观测量之间有明显不同的观测值。。噪音包括错误值或偏离期望的孤立点值，但也不能说噪声点包含离群点，虽然大部分数据挖掘方法都将离群点视为噪声或异常而丢弃。然而，在一些应用（例如：欺诈检测），会针对离群点做离群点分析或异常挖掘。而且有些点在局部是属于离群点，但从全局看是正常的。</p>
+</blockquote>
+<h2 id="分箱法"><a href="#分箱法" class="headerlink" title="分箱法"></a>分箱法</h2><p>分箱方法通过考察数据的“近邻”（即，周围的值）来光滑有序数据值。这些有序的值被分布到一些“桶”或箱中。由于分箱方法考察近邻的值，因此它进行局部光滑。</p>
+<ul>
+<li>用箱均值光滑</li>
+</ul>
+<p>箱中每一个值被箱中的平均值替换。</p>
+<ul>
+<li>用箱中位数平滑</li>
+</ul>
+<p>箱中的每一个值被箱中的中位数替换。</p>
+<ul>
+<li>用箱边界平滑</li>
+</ul>
+<p>箱中的最大和最小值同样被视为边界。箱中的每一个值被最近的边界值替换。<br>一般而言，宽度越大，光滑效果越明显。箱也可以是等宽的，其中每个箱值的区间范围是个常量。分箱也可以作为一种离散化技术使用.</p>
+<h2 id="回归法"><a href="#回归法" class="headerlink" title="回归法"></a>回归法</h2><p>可以用一个函数拟合数据来光滑数据。线性回归涉及找出拟合两个属性（或变量）的“最佳”直线，使得一个属性能够预测另一个。多线性回归是线性回归的扩展，它涉及多于两个属性，并且数据拟合到一个多维面。使用回归，找出适合数据的数学方程式，能够帮助消除噪声。</p>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p><a href="https://www.cnblogs.com/charlotte77/p/5606926.html" target="_blank" rel="noopener">https://www.cnblogs.com/charlotte77/p/5606926.html</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/28/YOLO论文笔记/" rel="next" title="YOLO论文笔记">
+                <i class="fa fa-chevron-left"></i> YOLO论文笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">tauriel</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#异常值"><span class="nav-number">1.</span> <span class="nav-text">异常值</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#可视化分析"><span class="nav-number">1.1.</span> <span class="nav-text">可视化分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-sigma-原则"><span class="nav-number">1.2.</span> <span class="nav-text">3 $\sigma$原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#箱型图分析"><span class="nav-number">1.3.</span> <span class="nav-text">箱型图分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于距离"><span class="nav-number">1.4.</span> <span class="nav-text">基于距离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于模型检测"><span class="nav-number">1.5.</span> <span class="nav-text">基于模型检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于密度"><span class="nav-number">1.6.</span> <span class="nav-text">基于密度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于聚类"><span class="nav-number">1.7.</span> <span class="nav-text">基于聚类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何处理"><span class="nav-number">1.8.</span> <span class="nav-text">如何处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缺失值"><span class="nav-number">2.</span> <span class="nav-text">缺失值</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#删除特征"><span class="nav-number">2.1.</span> <span class="nav-text">删除特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计量填充"><span class="nav-number">2.2.</span> <span class="nav-text">统计量填充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插值"><span class="nav-number">2.3.</span> <span class="nav-text">插值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型预测"><span class="nav-number">2.4.</span> <span class="nav-text">模型预测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊处理"><span class="nav-number">2.5.</span> <span class="nav-text">特殊处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#去重"><span class="nav-number">3.</span> <span class="nav-text">去重</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#噪声"><span class="nav-number">4.</span> <span class="nav-text">噪声</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分箱法"><span class="nav-number">4.1.</span> <span class="nav-text">分箱法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回归法"><span class="nav-number">4.2.</span> <span class="nav-text">回归法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">5.</span> <span class="nav-text">reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tauriel</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

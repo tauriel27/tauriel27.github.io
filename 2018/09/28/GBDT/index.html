@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="baidu-site-verification" content="vjgZxMRwYY" />
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Regression Tree and Ensemble The tree ensemble model consists of a set of classification and regression trees (CART).   CART   We classify the members of a family into different leaves, and assign th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tauriel&#39; Story">
+<meta property="og:url" content="http://tauriel27.github.io/2018/09/28/GBDT/index.html">
+<meta property="og:site_name" content="Tauriel&#39; Story">
+<meta property="og:description" content="Regression Tree and Ensemble The tree ensemble model consists of a set of classification and regression trees (CART).   CART   We classify the members of a family into different leaves, and assign th">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/cart.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/twocart.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-14-59-26.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-15-00-37.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-15-03-04.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-19-53-44.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-20-47-53.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-21-07-17.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-21-07-57.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-21-12-56.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-21-17-06.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-21-19-29.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-21-32-21.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-21-38-46.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-21-38-55.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-21-41-07.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-21-41-39.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-26-21-45-26.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-27-10-35-45.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-27-10-28-18.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/struct_score.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/split_find.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-27-21-05-02.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-27-21-15-30.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-27-21-17-08.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-27-21-26-38.png">
+<meta property="og:image" content="http://tauriel27.github.io/2018/09/28/image/2018-09-27-21-37-51.png">
+<meta property="og:updated_time" content="2018-09-28T14:05:11.957Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tauriel&#39; Story">
+<meta name="twitter:description" content="Regression Tree and Ensemble The tree ensemble model consists of a set of classification and regression trees (CART).   CART   We classify the members of a family into different leaves, and assign th">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/cart.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://tauriel27.github.io/2018/09/28/GBDT/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | Tauriel' Story</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Tauriel' Story</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />Categories</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/09/28/GBDT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tauriel">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tauriel' Story">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-28 21:48:41 / Modified: 22:05:11" itemprop="dateCreated datePublished" datetime="2018-09-28T21:48:41+08:00">2018-09-28</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Regression-Tree-and-Ensemble"><a href="#Regression-Tree-and-Ensemble" class="headerlink" title="Regression Tree and Ensemble"></a>Regression Tree and Ensemble</h1><blockquote>
+<p>The tree ensemble model consists of a set of classification and regression trees (CART). </p>
+<ul>
+<li>CART</li>
+</ul>
+</blockquote>
+<p>We classify the members of a family into different leaves, and assign them the score on the corresponding leaf. A CART is a bit different from decision trees, in which the leaf only contains decision values.</p>
+<p><img src="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/cart.png" alt="alt"></p>
+<blockquote>
+<p>regression tree is a function that maps the attributes to the score</p>
+</blockquote>
+<ul>
+<li>Regression Tree Ensemble</li>
+</ul>
+<p>Usually, a single tree is not strong enough to be used in practice. What is actually used is the ensemble model, which sums the prediction of multiple trees together.</p>
+<p><img src="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/twocart.png" alt="alt"></p>
+<p>Mathematically, we can write our model in the form.where $K$<br> is the number of trees, $f$ is a function in the functional space $\mathcal{F}$, and $\mathcal{F}$ is the set of all possible CARTs. </p>
+<p>$$\hat{y}<em>i = \sum</em>{k=1}^K f_k(x_i), f_k \in \mathcal{F}$$</p>
+<ul>
+<li><p>How can we learn functions?</p>
+<ul>
+<li><p>I want to predict whether I like romantic music at time t</p>
+<p><img src="../image/2018-09-26-14-59-26.png" alt=""></p>
+</li>
+<li><p>Things we need to learn</p>
+<p><img src="../image/2018-09-26-15-00-37.png" alt=""></p>
+</li>
+<li><p>Objective for single variable regression tree(step functions)</p>
+<ul>
+<li>Training Loss: How will the function fit on the points?</li>
+<li>Regularization: How do we define complexity of the function?<ul>
+<li>Number of splitting points, l2 norm of the height in each segment?</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Define objective (loss, regularization), and optimize it!!</li>
+</ul>
+<p>The objective function to be optimized is given by</p>
+<p>$$\text{obj}(\theta) = \sum_i^n l(y_i, \hat{y}<em>i) + \sum</em>{k=1}^K \Omega(f_k)$$<br>where $L$<br>is the training loss function, and $Ω$<br>is the regularization term.</p>
+</li>
+<li><p>Bias-variance tradeoff</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="../image/2018-09-26-15-03-04.png" alt=""></p>
+<blockquote>
+<p>Regression tree ensemble defines how you make the prediction score, it can be used for Classification, Regression, Ranking….It all depends on how you define the objective function!</p>
+</blockquote>
+<h1 id="Boosting-Tree"><a href="#Boosting-Tree" class="headerlink" title="Boosting Tree"></a>Boosting Tree</h1><ul>
+<li>Boosting</li>
+</ul>
+<blockquote>
+<p>Boosting 是一族可将弱学习器提升为强学习器的算法。先从初始训练集训练出一个基学习器，然后根据基学习器的表现对训练样本分布进行调整，使得先前基学习器做错的训练样本受到更多的关注，然后基于调整后的样本分布来训练下一个基学习器，如此重复，直至基学习器数目达到指定值T，最终将这T个基学习器进行加权结合。</p>
+<ul>
+<li>AdaBoost (Adaptive Boosting)</li>
+</ul>
+</blockquote>
+<p>基学习器的线性组合（additive model）</p>
+<p>$$H(x)=\sum_{t=1}^T \alpha_th_t(x)$$</p>
+<p>来最小化指数损失函数（exponential loss function）</p>
+<p>$$\ell_{exp}(H\rvert D)=\mathbb{E}_{x\thicksim\mathcal{D}}[e^{-f(x)H(x)}]$$</p>
+<p>算法流程如下</p>
+<p><img src="../image/2018-09-26-19-53-44.png" alt=""></p>
+<ul>
+<li><p>AdaBoost算法解释</p>
+<blockquote>
+<p>AdaBoost算法是模型为加法模型、损失函数为指数函数、学习算法为向前分步算法时的二分类学习方法</p>
+</blockquote>
+<ul>
+<li><p>加法模型（additive model）</p>
+<p>$$f(x)=\sum_{m=1}^M\beta_mb(x;\gamma_m)$$<br>其中，$b(x;\gamma_m)$为基函数，$\gamma_m$为基函数的参数，$\beta_m$为基函数的系数，显然AdaBoost最终分类器线性组合 $f(x)=\sum_{m=1}^M\alpha_mG_m(x)$ 是一个加法模型。</p>
+</li>
+<li><p>向前分步加法模型</p>
+<p><img src="../image/2018-09-26-20-47-53.png" alt=""></p>
+</li>
+<li>问题的分解<br><img src="../image/2018-09-26-21-07-17.png" alt=""><br><img src="../image/2018-09-26-21-07-57.png" alt=""><br>前向分步算法将同时求解从 $m$=1 到 $M$ 所有参数的优化问题，简化为逐次求解各个参数的优化问题。</li>
+</ul>
+</li>
+<li><p>AdaBoost算法推导</p>
+<ul>
+<li><p>使用指数损失函数</p>
+<p><img src="../image/2018-09-26-21-12-56.png" alt=""></p>
+</li>
+<li><p>前向分步算法</p>
+<p>$$f(x_i)=f_{m-1}(x_i)+\beta_mG(x_i)$$<br>带入loss function</p>
+<p><img src="../image/2018-09-26-21-17-06.png" alt=""></p>
+<p>$$w_i^{(m)}=exp(-y_if_{m-1}(x_i))$$</p>
+<p><img src="../image/2018-09-26-21-19-29.png" alt=""></p>
+<p>$w_i^{(m)}$ 跟 $\beta$ 和 $G$都不相关，可以看作迭代中添加的一个系数，和 $f_{m-1}(x_i)$ 相关，所以该系数随着迭代会改变</p>
+<p>现证明上式中达到最小 $\beta^<em>_m G^</em>_m$ 的就是AdaBoost算法中的$\beta_m G_m$，当 $\beta&gt;0$</p>
+<p><img src="../image/2018-09-26-21-32-21.png" alt=""><br>此分类器是使 $m$ 轮加权训练数据分类误差率最小的基本分类器</p>
+<p><img src="../image/2018-09-26-21-38-46.png" alt=""><br><img src="../image/2018-09-26-21-38-55.png" alt=""></p>
+<p>将求得的 $G^*_m(x)$ 代入上式，对 $\beta$ 求导并使倒数为0，即可得到最小的 $\beta$</p>
+<p><img src="../image/2018-09-26-21-41-07.png" alt=""></p>
+<p>$err_m$是分类误差率</p>
+<p><img src="../image/2018-09-26-21-41-39.png" alt=""></p>
+<p>再看权值更新</p>
+<p><img src="../image/2018-09-26-21-45-26.png" alt=""></p>
+<p>可以看出与AdaBoost各步骤等价</p>
+</li>
+</ul>
+</li>
+<li><p>Boosting Tree 总结</p>
+<blockquote>
+<p>提升树实际采用加法模型与前向分步算法，以决策树为基函数的提升方法。对分类问题决策树是二叉分类树，对回归问题是二叉回归树</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="../image/2018-09-27-10-35-45.png" alt=""></p>
+<h1 id="Gradient-Boosting-Decision-Tree（MART）"><a href="#Gradient-Boosting-Decision-Tree（MART）" class="headerlink" title="Gradient Boosting Decision Tree（MART）"></a>Gradient Boosting Decision Tree（MART）</h1><blockquote>
+<p>AdaBoost通过提高错分数据点的权重来改进模型，而梯度提升树通过计算负梯度来改进模型。回归问题的提升树通过拟合残差学习回归树，这个残差是采用Squared error损失函数的负梯度，是梯度提升树的一种情况。</p>
+</blockquote>
+<p><img src="../image/2018-09-27-10-28-18.png" alt=""></p>
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><ul>
+<li>二阶泰勒展开+添加正则项</li>
+<li>特征划分<ul>
+<li>Weighted Quantile Sketch（for approximate algorithm）</li>
+<li>Sparsity-aware Split Finding（run faster for sparse data）</li>
+</ul>
+</li>
+<li>并行加速</li>
+</ul>
+<h2 id="二阶泰勒展开"><a href="#二阶泰勒展开" class="headerlink" title="二阶泰勒展开"></a>二阶泰勒展开</h2><p>$$\hat{y}_i^{(0)} = 0 \<br>\hat{y}_i^{(1)} = f_1(x_i) = \hat{y}_i^{(0)} + f_1(x_i)\<br>\hat{y}_i^{(2)} = f_1(x_i) + f_2(x_i)= \hat{y}_i^{(1)} + f_2(x_i)\<br>\dots\<br>\hat{y}<em>i^{(t)} = \sum</em>{k=1}^t f_k(x_i)= \hat{y}_i^{(t-1)} + f_t(x_i)$$</p>
+<ul>
+<li>目标函数</li>
+</ul>
+<p>$$\text{obj}^{(t)}  = \sum_{i=1}^n l(y_i, \hat{y}<em>i^{(t)}) + \sum</em>{i=1}^t\Omega(f_i) \<br>           = \sum_{i=1}^n l(y_i, \hat{y}_i^{(t-1)} + f_t(x_i)) + \Omega(f_t) + \mathrm{constant}$$</p>
+<ul>
+<li>MSE损失函数</li>
+</ul>
+<p>$$\text{obj}^{(t)}  = \sum_{i=1}^n (y_i - (\hat{y}_i^{(t-1)} + f_t(x_i)))^2 + \sum_{i=1}^t\Omega(f_i) \<br>           = \sum_{i=1}^n [2(\hat{y}_i^{(t-1)} - y_i)f_t(x_i) + f_t(x_i)^2] + \Omega(f_t) + \mathrm{constant}$$<br>$$y_i - (\hat{y}_i^{(t-1)} + f_t(x_i))= r-f_t(x_i) \<br>r=y_i-\hat{y}^{t-1}$$</p>
+<p>$r$ 一般称为残差，也即是一阶导，负梯度</p>
+<p>使用其他损失函数无法得到这么规则的形式，考虑一般情况，对 obj 做二阶泰勒展开</p>
+<p>$$\text{obj}^{(t)} = \sum_{i=1}^n [l(y_i, \hat{y}_i^{(t-1)}) + g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i)] + \Omega(f_t) + \mathrm{constant}$$</p>
+<p>$g_i$, $h_i$ 分别为一阶导和二阶导</p>
+<p>$$g_i = \partial_{\hat{y}_i^{(t-1)}} l(y_i, \hat{y}_i^{(t-1)})\<br>h_i = \partial_{\hat{y}_i^{(t-1)}}^2 l(y_i, \hat{y}_i^{(t-1)})$$</p>
+<p>移去所有常数，在训练第 $t$ 轮时</p>
+<p>$$\sum_{i=1}^n [g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i)] + \Omega(f_t)$$<br>得到这个一般形式，只依赖于 $g_i$ 和 $h_i$，使得XGBoost可以使用定制的损失函数</p>
+<h2 id="正则项"><a href="#正则项" class="headerlink" title="正则项"></a>正则项</h2><ul>
+<li>树的定义</li>
+</ul>
+<p>$$f_t(x) = w_{q(x)}, w \in R^T, q:R^d\rightarrow {1,2,\cdots,T} $$</p>
+<p>w 是每个叶子的值组成的向量，q 是 x 到树叶子的映射函数，T 是叶子个数，所以模型复杂度定义如下</p>
+<p>$$\Omega(f) = \gamma T + \frac{1}{2}\lambda \sum_{j=1}^T w_j^2$$</p>
+<h2 id="Shrinkage-and-Column-Subsampling"><a href="#Shrinkage-and-Column-Subsampling" class="headerlink" title="Shrinkage and Column Subsampling"></a>Shrinkage and Column Subsampling</h2><p>除了添加正则化项，还使用两种额外的技术来进一步阻止overfitting。</p>
+<ul>
+<li>第一种技术是Friedman介绍的Shrinkage。Shrinkage会在每一步tree boosting时，会将新加入的weights通过一个因子η<br>进行缩放。与随机优化中的learning rate相类似，对于用于提升模型的新增树(future trees)，shrinkage可以减少每棵单独的树、以及叶子空间（leaves space）的影响。</li>
+<li>第二个技术是列特征子抽样(column feature subsampling)。该技术也会在RandomForest中使用，在商业软件TreeNet中的gradient boosting也有实现，但开源包中没实现。根据用户的反馈，比起传统的行子抽样（row sub-sampling：同样也支持），使用列子抽样可以阻止overfitting。列子抽样的使用可以加速并行算法的计算</li>
+</ul>
+<h2 id="Structure-score"><a href="#Structure-score" class="headerlink" title="Structure score"></a>Structure score</h2><p>$$\text{obj}^{(t)} \approx \sum_{i=1}^n [g_i w_{q(x_i)} + \frac{1}{2} h_i w_{q(x_i)}^2] + \gamma T + \frac{1}{2}\lambda \sum_{j=1}^T w_j^2\<br>= \sum^T_{j=1} [(\sum_{i\in I_j} g_i) w_j + \frac{1}{2} (\sum_{i\in I_j} h_i + \lambda) w_j^2 ] + \gamma T$$</p>
+<p>$I_j = {i|q(x_i)=j}$ 是分配到编号 $j$ 叶子的所有数据点的集合</p>
+<p>$$\text{obj}^{(t)} = \sum^T_{j=1} [G_jw_j + \frac{1}{2} (H_j+\lambda) w_j^2] +\gamma T$$</p>
+<p>$G_j = \sum_{i\in I_j} g_i$ 表示叶子编号为j的数据点的一阶导的和， $H_j = \sum_{i\in I_j} h_i$ 表示叶子编号为j的数据点的二阶导的和</p>
+<p> $wj$ 相互独立，$G_jw_j+\frac{1}{2}(H_j+\lambda)w_j^2$ 是个二次函数，我们可以直接求出最优点</p>
+<p>$$w_j^\ast = -\frac{G_j}{H_j+\lambda}\<br>\text{obj}^\ast = -\frac{1}{2} \sum_{j=1}^T \frac{G_j^2}{H_j+\lambda} + \gamma T$$</p>
+<p>通过计算obj可以衡量树结构的好坏，相比决策树更加精细（只考虑提升信息增益）</p>
+<p><img src="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/struct_score.png" alt="alt"></p>
+<h2 id="寻找最优划分点"><a href="#寻找最优划分点" class="headerlink" title="寻找最优划分点"></a>寻找最优划分点</h2><h3 id="Exact-Greedy-Algorithm（预先排序-枚举）"><a href="#Exact-Greedy-Algorithm（预先排序-枚举）" class="headerlink" title="Exact Greedy Algorithm（预先排序+枚举）"></a>Exact Greedy Algorithm（预先排序+枚举）</h3><p>我们虽然可以通过obj衡量一颗树的质量，但是暴力枚举依旧困难，先考虑叶子结点的划分</p>
+<p>$$Gain = \frac{1}{2} \left[\frac{G_L^2}{H_L+\lambda}+\frac{G_R^2}{H_R+\lambda}-\frac{(G_L+G_R)^2}{H_L+H_R+\lambda}\right] - \gamma$$<br>该公式组成：</p>
+<ul>
+<li>划分左叶子的增益</li>
+<li>划分右叶子的增益</li>
+<li>父节点的增益</li>
+</ul>
+<p>可以看到如果划分增益小于 $\gamma$ ，那最好不要这个分支，这正是树剪枝的一个基本策略</p>
+<p>为了寻找最优化分点，首先把每个样本排序，如下图</p>
+<p><img src="https://raw.githubusercontent.com/dmlc/web-data/master/xgboost/model/split_find.png" alt="alt"></p>
+<p>进行一次扫描即可高效的得出最优划分点，该算法目前很多库支持入sciket-learn，R‘s gbm，single machine XGB。</p>
+<h3 id="Approximate-Algorithm"><a href="#Approximate-Algorithm" class="headerlink" title="Approximate Algorithm"></a>Approximate Algorithm</h3><p>数据可能没有办法全部载入内存，无法使用上述贪心策略。该算法会首先根据特征分布的百分位数(percentiles of feature distribution)，提出候选划分点(candidate splitting points)。接着，该算法将连续型特征映射到由这些候选点划分的分桶(buckets)中，聚合统计信息，基于该聚合统计找到在建议（proposal）间的最优解。</p>
+<p><img src="../image/2018-09-27-21-05-02.png" alt=""></p>
+<ul>
+<li>寻找 $S_k$</li>
+</ul>
+<p>$D_k={(x_{1k},h_1),(x_{2k},h_2)···(x_{nk},h_n)}$ 表示样本第 k 个特征值和二阶导</p>
+<p><img src="../image/2018-09-27-21-15-30.png" alt=""></p>
+<p>表示第 k 个特征值小于 z的样本比例，通过下式寻找 $D_k$, $\epsilon$ 是近似因子，可以理解为分为 $1/\epsilon$ 个划分点</p>
+<p><img src="../image/2018-09-27-21-17-08.png" alt=""></p>
+<ul>
+<li>global or local</li>
+</ul>
+<p>该算法有两个变种，取决于给定的建议（proposal）。全局变种（global variant）会在树构建的初始阶段，建议所有的候选划分，并在所有的层级（level）上使用相同的建议。局部变种（local variant）则在每次划分后重新建议（re-proposes）。比起局部法，全局法需要更少的建议步骤。然而，对于全局建议，通常需要更多的候选点，因为在每次划分之后，不需要重新定义候选。局部建议会在每次划分后重新定义候选，对于更深的树更合适。图3展示了在Higgs boson数据集上不同算法的比较。我们发现，局部建议确实需要更少的候选。如果两者的候选一样多，全局建议比局部建议会更精确。</p>
+<h3 id="Weighted-Quantile-Sketch"><a href="#Weighted-Quantile-Sketch" class="headerlink" title="Weighted Quantile Sketch"></a>Weighted Quantile Sketch</h3><p>$h_i$ 表示每个数据点的权重，可以从下式看出</p>
+<p><img src="../image/2018-09-27-21-26-38.png" alt=""><br>$g_i/h_i$ 作为label，$h_i$ 为平方损失的权重</p>
+<h3 id="Sparsity-aware-Split-Finding"><a href="#Sparsity-aware-Split-Finding" class="headerlink" title="Sparsity-aware Split Finding"></a>Sparsity-aware Split Finding</h3><p>有些数据集本身或者由于特征工程（one-hot）导致特征非常稀疏。XGBoost提出一种针对稀疏特征的统一处理方式，同时计算开销减小（只计算非空条目）</p>
+<p><img src="../image/2018-09-27-21-37-51.png" alt=""></p>
+<ul>
+<li>只计算非空值</li>
+<li>分别处理将missing该特征值的样本分配到左叶子结点和右叶子结点的两种情形，分到那个子节点带来的增益大，默认的方向就是哪个子节点 </li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/28/CNN总结/" rel="next" title="CNN总结">
+                <i class="fa fa-chevron-left"></i> CNN总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/28/NN-technique/" rel="prev" title="NN-technique">
+                NN-technique <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">tauriel</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Regression-Tree-and-Ensemble"><span class="nav-number">1.</span> <span class="nav-text">Regression Tree and Ensemble</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Boosting-Tree"><span class="nav-number">2.</span> <span class="nav-text">Boosting Tree</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gradient-Boosting-Decision-Tree（MART）"><span class="nav-number">3.</span> <span class="nav-text">Gradient Boosting Decision Tree（MART）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XGBoost"><span class="nav-number">4.</span> <span class="nav-text">XGBoost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二阶泰勒展开"><span class="nav-number">4.1.</span> <span class="nav-text">二阶泰勒展开</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则项"><span class="nav-number">4.2.</span> <span class="nav-text">正则项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shrinkage-and-Column-Subsampling"><span class="nav-number">4.3.</span> <span class="nav-text">Shrinkage and Column Subsampling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Structure-score"><span class="nav-number">4.4.</span> <span class="nav-text">Structure score</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寻找最优划分点"><span class="nav-number">4.5.</span> <span class="nav-text">寻找最优划分点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Exact-Greedy-Algorithm（预先排序-枚举）"><span class="nav-number">4.5.1.</span> <span class="nav-text">Exact Greedy Algorithm（预先排序+枚举）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Approximate-Algorithm"><span class="nav-number">4.5.2.</span> <span class="nav-text">Approximate Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Weighted-Quantile-Sketch"><span class="nav-number">4.5.3.</span> <span class="nav-text">Weighted Quantile Sketch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sparsity-aware-Split-Finding"><span class="nav-number">4.5.4.</span> <span class="nav-text">Sparsity-aware Split Finding</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tauriel</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
