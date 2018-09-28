@@ -336,6 +336,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/05/16/学习资源/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="tauriel">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Tauriel' Story">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/16/学习资源/" itemprop="url">
+                  学习资源
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-05-16 13:38:16" itemprop="dateCreated datePublished" datetime="2018-05-16T13:38:16+08:00">2018-05-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-05-19 20:16:23" itemprop="dateModified" datetime="2018-05-19T20:16:23+08:00">2018-05-19</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="NLP"><a href="#NLP" class="headerlink" title="NLP"></a>NLP</h1><blockquote>
+<p><a href="https://github.com/Embedding/Chinese-Word-Vectors" target="_blank" rel="noopener">100+ Chinese Word Vectors 上百种预训练中文词向量</a></p>
+</blockquote>
+<blockquote>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://tauriel27.github.io/2018/05/15/mac配置vim（high-sierra/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -399,7 +555,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-05-16 13:21:47" itemprop="dateModified" datetime="2018-05-16T13:21:47+08:00">2018-05-16</time>
+                <time title="Modified: 2018-05-16 14:55:59" itemprop="dateModified" datetime="2018-05-16T14:55:59+08:00">2018-05-16</time>
               
             
           </span>
@@ -477,9 +633,8 @@
 <h2 id="设置alias"><a href="#设置alias" class="headerlink" title="设置alias"></a>设置alias</h2><p>通过<code>alias</code>命令，继续使用vim命令，但是调用的是macvi`m<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装了zsh，环境变量设置在~/.zshrc中</span></span><br><span class="line"><span class="comment"># 使用bash的话，修改~/.bashrc</span></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># 行末添加</span></span><br><span class="line"><span class="built_in">alias</span> vim=<span class="string">'mvim -v'</span></span><br></pre></td></tr></table></figure></p>
 <p>这时候再查看，系统已经支持+clipboard<br><img src="../image/2018-05-15-19-53-06.png" alt=""><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改vim配置文件~/.vimrc</span></span><br><span class="line">vim ~/.vimrc</span><br><span class="line"><span class="comment"># 添加下行，使用系统剪切板</span></span><br><span class="line"><span class="built_in">set</span> clipboard=unname</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>还有一个问题，就是在<code>tmux</code>下使用<code>vim</code>依旧无法使用系统寄存器，无法跨文件拷贝，报错和上面相同。我使用<code>ubuntu</code>也遇到这个问题，还</p>
+<p>还有一个问题，就是在<code>tmux</code>下使用<code>vim</code>依旧无法使用系统寄存器，无法跨文件拷贝，报错和上面相同。我使用<code>ubuntu</code>也遇到这个问题，还<font color="red"><strong>未解决</strong></font>。<code>macOS</code>解决方法如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install reattach-to-user-namespace</span><br><span class="line"><span class="comment"># 添加到~/.tmux.conf</span></span><br><span class="line"><span class="built_in">set</span>-option -g default-command <span class="string">"reattach-to-user-namespace -l zsh"</span></span><br></pre></td></tr></table></figure></p>
 </blockquote>
-<p><font color="red"><strong>未解决</strong></font>。<code>macOS</code>解决方法如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install reattach-to-user-namespace</span><br><span class="line"><span class="comment"># 添加到~/.tmux.conf</span></span><br><span class="line"><span class="built_in">set</span>-option -g default-command <span class="string">"reattach-to-user-namespace -l zsh"</span></span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>如果不喜欢折腾，到这里已经可以了，下面是使用插件让vim更加精致</p>
 </blockquote>
@@ -830,7 +985,7 @@ hexo n == hexo new
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
